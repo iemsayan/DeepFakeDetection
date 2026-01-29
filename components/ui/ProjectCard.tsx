@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 type ProjectCardProps = {
     title: string;
-    description: string;
+    description: string[]; // 👈 bullet points
     tech: string[];
     link: string;
     featured?: boolean;
@@ -22,122 +22,109 @@ export default function ProjectCard({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ y: -6 }}
-            transition={{ type: "spring", stiffness: 200, damping: 22 }}
+            whileHover={{ backgroundColor: "rgba(255,255,255,0.06)" }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="
         group
         relative
-        isolate
-        h-full
-        min-h-[240px]
-        rounded-3xl
-        overflow-hidden
+        block
+        rounded-2xl
         border border-white/15
-        bg-white/10
-        p-7
-        transition
-        cursor-pointer
+        bg-white/5
+        backdrop-blur-md
+        px-4 py-4
+        sm:px-5 sm:py-5
+        md:px-6 md:py-6
+        transition-colors
         focus:outline-none
         focus-visible:ring-2
         focus-visible:ring-[var(--accent)]/60
       "
         >
-            {featured && (
-                <span
-                    className="
-            absolute
-            top-5 right-5
-            z-20
-            rounded-full
-            bg-[var(--accent)]/15
-            px-3 py-1
-            text-xs
-            font-medium
-            tracking-wide
-            text-[var(--accent)]
-          "
-                >
-                    Featured
-                </span>
-            )}
-
-            {/* Top accent */}
-            <div
+            {/* Left accent line */}
+            <span
                 className="
           pointer-events-none
-          absolute
-          inset-x-0
-          top-0
-          h-1
-          bg-gradient-to-r
-          from-transparent
-          via-[var(--accent)]
-          to-transparent
+          absolute left-0 top-0 h-full w-[2px]
+          bg-[var(--accent)]
           opacity-0
-          group-hover:opacity-100
+          group-hover:opacity-60
           transition-opacity
         "
             />
 
-            {/* Border highlight */}
-            <div
-                className="
-          pointer-events-none
-          absolute inset-0
-          rounded-3xl
-          opacity-0
-          group-hover:opacity-100
-          transition
-          ring-1 ring-white/20
-        "
-            />
+            <div className="flex flex-row items-start justify-between gap-4">
 
-            <div className="relative z-10 flex h-full flex-col">
-                <h3 className="text-xl md:text-2xl font-semibold tracking-tight">
-                    {title}
-                </h3>
+                {/* LEFT — CONTENT */}
+                <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-base sm:text-lg md:text-xl font-semibold tracking-tight truncate">
+                            {title}
+                        </h3>
 
-                <p className="mt-3 text-sm md:text-base text-[var(--text-secondary)] leading-relaxed flex-grow">
-                    {description}
-                </p>
+                        {featured && (
+                            <span className="shrink-0 rounded-full bg-[var(--accent)]/15 px-2.5 py-1 text-[11px] font-medium text-[var(--accent)]">
+                                Featured
+                            </span>
+                        )}
+                    </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                    {tech.map((t) => (
-                        <span
-                            key={t}
-                            className="
-                rounded-full
-                border border-white/20
-                bg-white/5
-                px-3 py-1
-                text-xs md:text-sm
-                text-[var(--text-secondary)]
-              "
-                        >
-                            {t}
-                        </span>
-                    ))}
+                    {/* Bullet points */}
+                    <ul className="mt-2 space-y-1 text-sm sm:text-base text-[var(--text-secondary)]">
+                        {description.map((point, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)] shrink-0" />
+                                <span className="leading-relaxed">{point}</span>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
-                <span
-                    className="
-            mt-6
-            inline-flex
-            items-center
-            gap-2
-            text-sm
-            font-medium
-            text-[var(--accent)]
-            opacity-0
-            group-hover:opacity-100
-            transition
-          "
-                >
-                    View project
-                    <span className="transition-transform group-hover:translate-x-1">
-                        →
+                {/* RIGHT — TECH + CTA */}
+                <div className="flex shrink-0 flex-col items-end gap-3 text-right">
+
+                    {/* Tech stack */}
+                    <div className="flex flex-wrap justify-end gap-2 max-w-[160px] sm:max-w-[220px]">
+                        {tech.map((t) => (
+                            <span
+                                key={t}
+                                className="
+                  rounded-full
+                  border border-white/15
+                  bg-white/10
+                  px-2.5 py-1
+                  text-[11px] sm:text-xs
+                  text-[var(--text-secondary)]
+                "
+                            >
+                                {t}
+                            </span>
+                        ))}
+                    </div>
+
+                    {/* CTA */}
+                    <span
+                        className="
+              relative
+              inline-flex items-center gap-1
+              text-sm font-medium
+              text-[var(--accent)]
+
+              after:absolute after:left-0 after:-bottom-1
+              after:h-[2px] after:w-0
+              after:bg-[var(--accent)]
+              after:transition-all after:duration-300
+
+              group-hover:after:w-full
+              focus-visible:after:w-full
+            "
+                    >
+                        View project
+                        <span className="transition-transform group-hover:translate-x-1">
+                            →
+                        </span>
                     </span>
-                </span>
+                </div>
             </div>
         </motion.a>
     );

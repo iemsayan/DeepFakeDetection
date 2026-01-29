@@ -1,10 +1,14 @@
 export const projects = [
     {
-        title: "Revives EcoTech – Web Platform",
-        description:
-            "Contributed to a live production web platform for an eco-tech company, building scalable frontend modules, improving application security, and optimizing frontend–backend integration for better reliability.",
+        title: "Revives EcoTech – Website",
+        description: [
+            "Built 5+ real production features like dashboards and a careers page",
+            "Added Firebase login and security",
+            "Connected frontend and backend properly so the site works smoothly and loads faster",
+        ],
         tech: [
-            "React",
+            "Google Search Console",
+            "Domain Hosting",
             "Next.js",
             "Tailwind CSS",
             "Firebase",
@@ -13,15 +17,17 @@ export const projects = [
         featured: true,
     },
     {
-        title: "Personal Portfolio & Freelance Website",
-        description:
-            "Designed and developed a high-performance, conversion-focused personal website to showcase freelance work, streamline client inquiries, and establish a strong professional online presence.",
+        title: "Portfolio & Freelance Websites",
+        description: [
+            "Designed and built portfolio and freelance websites for 2+ clients",
+            "Handled UI, animations, responsiveness, and deployment end to end",
+        ],
         tech: [
             "Next.js",
             "Tailwind CSS",
             "Framer Motion",
             "Vercel",
         ],
-        link: "https://your-portfolio.vercel.app",
+        link: "https://sayandeep-portfolio.vercel.app/",
     },
 ];
