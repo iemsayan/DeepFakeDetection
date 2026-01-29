@@ -3,7 +3,7 @@ import Projects from "@/components/sections/Projects";
 import About from "@/components/sections/About";
 import Process from "@/components/sections/Process";
 import Pricing from "@/components/sections/Pricing";
-import QnA from "@/components/sections/QnA";
+import QnA from "@/components/sections/qna";
 import Tools from "@/components/sections/Tools";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
