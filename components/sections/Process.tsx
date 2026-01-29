@@ -16,10 +16,7 @@ const steps = [
 
 export default function Process() {
     return (
-        <Section
-            id="process"
-            className="mt-40 overflow-hidden"
-        >
+        <Section id="process" className="mt-40 overflow-hidden">
             {/* Heading */}
             <Reveal>
                 <h2 className="mb-24 text-center text-5xl md:text-6xl font-extrabold tracking-tight">
@@ -27,41 +24,24 @@ export default function Process() {
                 </h2>
             </Reveal>
 
-            {/* Container (CLIPPED) */}
-            <div className="relative mx-auto max-w-5xl overflow-hidden">
-
-                {/* SVG Flow Line */}
-                <svg
-                    className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none"
-                    width="420"
-                    height="1400"
-                    viewBox="0 0 420 1400"
-                    fill="none"
-                >
-                    <defs>
-                        <linearGradient id="flowGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(255,255,255,0.15)" />
-                            <stop offset="50%" stopColor="var(--accent)" />
-                            <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
-                        </linearGradient>
-                    </defs>
-
-                    <motion.path
-                        d="
-              M210 0
-              C80 200, 340 400, 210 600
-              C80 800, 340 1000, 210 1200
-              C80 1400, 340 1600, 210 1800
-            "
-                        stroke="url(#flowGradient)"
-                        strokeWidth="3"
-                        fill="none"
-                        initial={{ pathLength: 0 }}
-                        whileInView={{ pathLength: 1 }}
-                        transition={{ duration: 3, ease: "easeInOut" }}
-                        viewport={{ once: true }}
-                    />
-                </svg>
+            {/* Container (hard-clipped to prevent bleed) */}
+            <div className="relative mx-auto max-w-5xl overflow-hidden px-4 md:px-8">
+                {/* Subtle vertical guide */}
+                <div
+                    className="
+            pointer-events-none
+            absolute
+            left-1/2
+            top-0
+            bottom-0
+            w-px
+            -translate-x-1/2
+            bg-gradient-to-b
+            from-transparent
+            via-white/15
+            to-transparent
+          "
+                />
 
                 {/* Steps */}
                 <div className="relative space-y-32">
@@ -77,10 +57,13 @@ export default function Process() {
                   bg-white/10
                   p-6
                   shadow-lg
-                  ${i % 2 === 0 ? "mr-auto" : "ml-auto"}
+                  ${i % 2 === 0
+                                        ? "mr-auto"
+                                        : "ml-auto"
+                                    }
                 `}
                             >
-                                {/* Connector Dot */}
+                                {/* Connector dot */}
                                 <span
                                     className={`
                     absolute
@@ -89,8 +72,11 @@ export default function Process() {
                     h-3 w-3
                     rounded-full
                     bg-[var(--accent)]
-                    shadow-[0_0_14px_var(--accent)]
-                    ${i % 2 === 0 ? "-right-6" : "-left-6"}
+                    shadow-[0_0_12px_var(--accent)]
+                    ${i % 2 === 0
+                                            ? "-right-6"
+                                            : "-left-6"
+                                        }
                   `}
                                 />
 
