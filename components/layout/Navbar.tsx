@@ -8,8 +8,8 @@ const links = [
     { name: "Projects", href: "#projects", id: "projects" },
     { name: "About", href: "#about", id: "about" },
     { name: "Process", href: "#process", id: "process" },
-    { name: "Q&A", href: "#qna", id: "qna" },
     { name: "Pricing", href: "#pricing", id: "pricing" },
+    { name: "Q&A", href: "#qna", id: "qna" },
     { name: "Contact", href: "#contact", id: "contact" },
 ];
 
@@ -19,7 +19,7 @@ export default function Navbar() {
     const [active, setActive] = useState("home");
     const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 
-    // 🔹 Move glass indicator
+    // 🔹 Move indicator safely
     const moveIndicator = (id: string) => {
         const el = itemRefs.current[id];
         const container = containerRef.current;
@@ -34,45 +34,47 @@ export default function Navbar() {
         });
     };
 
-    // 🔹 Scroll spy
+    // 🔹 IntersectionObserver scroll spy (correct way)
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollPos = window.scrollY + 200;
+        const sections = links
+            .map((l) => document.getElementById(l.id))
+            .filter(Boolean) as HTMLElement[];
 
-            links.forEach(({ id }) => {
-                const section = document.getElementById(id);
-                if (!section) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActive(entry.target.id);
+                        moveIndicator(entry.target.id);
+                    }
+                });
+            },
+            {
+                rootMargin: "-40% 0px -50% 0px",
+                threshold: 0,
+            }
+        );
 
-                const top = section.offsetTop;
-                const height = section.offsetHeight;
+        sections.forEach((section) => observer.observe(section));
 
-                if (scrollPos >= top && scrollPos < top + height) {
-                    setActive(id);
-                    moveIndicator(id);
-                }
-            });
-        };
-
-        handleScroll();
-        window.addEventListener("scroll", handleScroll);
-        window.addEventListener("resize", () => moveIndicator(active));
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [active]);
-
-    // 🔹 Initial indicator position
-    useEffect(() => {
-        moveIndicator(active);
+        return () => observer.disconnect();
     }, []);
 
+    // 🔹 Initial + resize-safe indicator positioning
+    useEffect(() => {
+        moveIndicator(active);
+
+        const handleResize = () => moveIndicator(active);
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [active]);
+
     return (
-        <header className="sticky top-0 z-50">
+        <header className="sticky top-4 z-50">
             <div className="mx-auto max-w-7xl px-4 md:px-8">
                 <nav
                     className="
-            mt-4
             relative
             overflow-hidden
             rounded-2xl
@@ -82,7 +84,7 @@ export default function Navbar() {
             shadow-lg
           "
                 >
-                    {/* ✨ Subtle inner glow */}
+                    {/* ✨ Inner glow */}
                     <div
                         className="
               pointer-events-none
@@ -96,13 +98,21 @@ export default function Navbar() {
                         {/* Logo */}
                         <span className="text-lg font-semibold">SG.</span>
 
-                        {/* Navigation */}
-                        <ul ref={containerRef} className="relative flex gap-1">
-                            {/* 🧊 Moving glass indicator (FIXED) */}
+                        {/* Nav */}
+                        <ul
+                            ref={containerRef}
+                            className="
+                relative
+                flex gap-1
+                overflow-x-auto
+                scrollbar-hide
+              "
+                        >
+                            {/* Indicator */}
                             <motion.div
                                 className="
                   pointer-events-none
-                  absolute top-0 bottom-0
+                  absolute inset-y-0
                   rounded-xl
                   bg-white/20 backdrop-blur-xl
                   border border-white/30
@@ -113,8 +123,8 @@ export default function Navbar() {
                                 }}
                                 transition={{
                                     type: "spring",
-                                    stiffness: 280,
-                                    damping: 26,
+                                    stiffness: 260,
+                                    damping: 24,
                                 }}
                             />
 
@@ -133,7 +143,7 @@ export default function Navbar() {
                                             moveIndicator(link.id);
                                         }}
                                         className={`
-                      block px-4 py-2 text-sm transition
+                      block px-4 py-2 text-sm font-medium transition
                       ${active === link.id
                                                 ? "text-white"
                                                 : "text-[var(--text-secondary)] hover:text-white"

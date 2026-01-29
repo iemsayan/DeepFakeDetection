@@ -3,15 +3,18 @@ import Reveal from "@/components/ui/Reveal";
 
 export default function Contact() {
     return (
-        <Section className="mt-40 text-center">
+        <Section
+            id="contact"
+            className="mt-48 text-center"
+        >
             <Reveal>
-                <h2 className="mb-6 text-4xl font-bold">
+                <h2 className="mb-8 text-5xl md:text-6xl font-extrabold tracking-tight">
                     Let’s <span className="text-[var(--accent)]">Build</span> Something
                 </h2>
             </Reveal>
 
             <Reveal delay={0.1}>
-                <p className="mx-auto mb-12 max-w-xl text-[var(--text-secondary)]">
+                <p className="mx-auto mb-14 max-w-2xl text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
                     Have an idea, project, or opportunity in mind?
                     I’m always open to meaningful conversations and serious work.
                 </p>
@@ -26,12 +29,12 @@ export default function Contact() {
             justify-center
             rounded-2xl
             border border-white/20
-            bg-white/10 backdrop-blur-xl
-            px-8 py-4
-            text-lg
-            font-medium
-            hover:bg-white/20
-            transition
+            bg-white/15 backdrop-blur-xl
+            px-10 py-5
+            text-lg md:text-xl
+            font-semibold
+            hover:bg-white/25
+            transition-colors
           "
                 >
                     Send me an email →

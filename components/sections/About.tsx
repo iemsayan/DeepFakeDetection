@@ -4,7 +4,7 @@ import Section from "@/components/ui/Section";
 import Stagger, { staggerItem } from "@/components/ui/Stagger";
 import { motion } from "framer-motion";
 
-const skills = [
+const SKILLS = [
     "Java",
     "Python",
     "React",
@@ -12,38 +12,38 @@ const skills = [
     "Tailwind CSS",
     "Node.js",
     "Firebase",
-];
+] as const;
 
 export default function About() {
     return (
-        <Section id="about" className="mt-32">
-            <div className="grid gap-16 md:grid-cols-2 items-start">
+        <Section id="about" className="mt-48">
+            <div className="mx-auto max-w-7xl grid gap-20 md:grid-cols-2 items-start">
 
                 {/* LEFT — ABOUT TEXT */}
                 <Stagger>
                     <motion.h2
                         variants={staggerItem}
-                        className="text-4xl font-bold mb-6"
+                        className="text-5xl md:text-6xl font-extrabold tracking-tight"
                     >
                         About <span className="text-[var(--accent)]">Me</span>
                     </motion.h2>
 
                     <motion.p
                         variants={staggerItem}
-                        className="text-[var(--text-secondary)] leading-relaxed"
+                        className="mt-8 text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed"
                     >
-                        I’m a developer who enjoys building fast, reliable, and visually
-                        refined web applications. I care deeply about performance, clean
-                        architecture, and thoughtful UI — not just making things work,
-                        but making them feel right.
+                        I’m a freelance frontend developer focused on building fast,
+                        reliable, and visually refined web applications that solve real
+                        business problems — not just ship features.
                     </motion.p>
 
                     <motion.p
                         variants={staggerItem}
-                        className="mt-4 text-[var(--text-secondary)] leading-relaxed"
+                        className="mt-6 text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed"
                     >
-                        My focus is on modern web technologies and crafting experiences
-                        that are scalable, maintainable, and user-friendly.
+                        I care deeply about performance, clean architecture, and thoughtful
+                        UI/UX, ensuring every product I work on is scalable, maintainable,
+                        and ready for real users.
                     </motion.p>
                 </Stagger>
 
@@ -51,35 +51,36 @@ export default function About() {
                 <Stagger delay={0.2}>
                     <motion.h3
                         variants={staggerItem}
-                        className="text-2xl font-semibold mb-6"
+                        className="text-3xl md:text-4xl font-semibold"
                     >
                         Skills & Tools
                     </motion.h3>
 
-                    <motion.div
+                    <motion.ul
                         variants={staggerItem}
-                        className="flex flex-wrap gap-3"
+                        className="mt-8 flex flex-wrap gap-4"
                     >
-                        {skills.map((skill) => (
-                            <motion.span
+                        {SKILLS.map((skill) => (
+                            <motion.li
                                 key={skill}
                                 variants={staggerItem}
                                 className="
                   rounded-full
                   border border-white/20
                   bg-white/10 backdrop-blur
-                  px-4 py-2
-                  text-sm
+                  px-6 py-3
+                  text-base md:text-lg
+                  font-medium
                   text-[var(--text-secondary)]
                   hover:text-white
-                  hover:bg-white/20
-                  transition
+                  hover:bg-white/25
+                  transition-colors
                 "
                             >
                                 {skill}
-                            </motion.span>
+                            </motion.li>
                         ))}
-                    </motion.div>
+                    </motion.ul>
                 </Stagger>
 
             </div>

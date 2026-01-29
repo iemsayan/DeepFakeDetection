@@ -1,26 +1,28 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React from "react";
+
+type SectionProps = {
+    id?: string;
+    children: React.ReactNode;
+    className?: string;
+};
 
 export default function Section({
     id,
     children,
     className = "",
-}: {
-    id?: string;
-    children: React.ReactNode;
-    className?: string;
-}) {
+}: SectionProps) {
     return (
-        <motion.section
+        <section
             id={id}
-            className={`relative ${className}`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-120px" }}
+            className={`
+        relative
+        px-4 md:px-8
+        ${className}
+      `}
         >
             {children}
-        </motion.section>
+        </section>
     );
 }
