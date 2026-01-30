@@ -13,7 +13,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sayandeep Ghosh — Freelance Frontend Developer",
+    default: "Sayandeep Ghosh — Freelance Developer",
     template: "%s · Sayandeep Ghosh",
   },
   description:
