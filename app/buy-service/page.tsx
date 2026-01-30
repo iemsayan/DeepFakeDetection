@@ -34,31 +34,22 @@ export default function BuyServicePage() {
         setLoading(true);
         setError("");
 
-        const formData = new FormData(e.currentTarget);
-
-        const payload = {
-            firstName: formData.get("firstName"),
-            lastName: formData.get("lastName"),
-            occupation: formData.get("occupation"),
-            email: formData.get("email"),
-            description: formData.get("description"),
-            deadline: formData.get("deadline"),
-        };
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
         try {
-            const res = await fetch(
-                "https://script.google.com/macros/s/AKfycbxZSSTIr1z0DEmfZoiKLOlFxEmn_ZU_b8nmMfWmCpa1PWUXPtZ2r7dJfa339HuHEKSW/exec",
+            await fetch(
+                "https://script.google.com/macros/s/AKfycbx2peyPPzF-4-5REAJVqO5c23fiQvvSG07vJvVmZZ_MTSeRWY-JbRyn7UzojJhn1oFm/exec",
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
+                    mode: "no-cors", // 🔥 REQUIRED
+                    body: formData,
                 }
             );
 
-            if (!res.ok) throw new Error();
-
+            // no-cors = assume success
             setSuccess(true);
-            (e.target as HTMLFormElement).reset();
+            form.reset();
         } catch {
             setError("Submission failed. Please try again.");
         } finally {
@@ -88,8 +79,7 @@ export default function BuyServicePage() {
                     <div
                         className="
               pointer-events-none
-              absolute
-              inset-0
+              absolute inset-0
               z-0
               rounded-3xl
               shadow-[0_0_40px_rgba(124,124,255,0.3)]
@@ -101,32 +91,25 @@ export default function BuyServicePage() {
                         type="button"
                         onClick={scrollToPricing}
                         className="
-              absolute
-              z-20
+              absolute z-20
               left-4 top-3
               sm:left-6 sm:top-6
-              inline-flex
-              items-center
-              gap-1
+              inline-flex items-center gap-1
               rounded-lg
               bg-[var(--accent)]
               px-3 py-1.5
               text-xs sm:text-sm
-              font-semibold
-              text-black
-              shadow-md
-              cursor-pointer
-              transition-all
-              duration-300
-              hover:-translate-x-1
-              hover:shadow-lg
+              font-semibold text-black
+              shadow-md cursor-pointer
+              transition-all duration-300
+              hover:-translate-x-1 hover:shadow-lg
               active:scale-95
             "
                     >
                         ← Services
                     </button>
 
-                    {/* CONTENT — increased top padding */}
+                    {/* CONTENT */}
                     <div className="relative z-10 px-5 py-6 sm:px-8 sm:py-10 pt-12 sm:pt-14">
                         {!success ? (
                             <>
@@ -143,34 +126,12 @@ export default function BuyServicePage() {
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <input
-                                            name="firstName"
-                                            placeholder="First Name"
-                                            required
-                                            className="input"
-                                        />
-                                        <input
-                                            name="lastName"
-                                            placeholder="Last Name"
-                                            required
-                                            className="input"
-                                        />
+                                        <input name="firstName" placeholder="First Name" required className="input" />
+                                        <input name="lastName" placeholder="Last Name" required className="input" />
                                     </div>
 
-                                    <input
-                                        name="occupation"
-                                        placeholder="Occupation"
-                                        required
-                                        className="input"
-                                    />
-
-                                    <input
-                                        name="email"
-                                        type="email"
-                                        placeholder="Email address"
-                                        required
-                                        className="input"
-                                    />
+                                    <input name="occupation" placeholder="Occupation" required className="input" />
+                                    <input name="email" type="email" placeholder="Email address" required className="input" />
 
                                     <textarea
                                         name="description"
@@ -184,31 +145,21 @@ export default function BuyServicePage() {
                                         <p className="text-xs text-[var(--text-secondary)]">
                                             📅 Deadline helps me plan your delivery timeline
                                         </p>
-                                        <input
-                                            name="deadline"
-                                            type="date"
-                                            required
-                                            className="input"
-                                        />
+                                        <input name="deadline" type="date" required className="input" />
                                     </div>
 
-                                    {error && (
-                                        <p className="text-sm text-red-400">{error}</p>
-                                    )}
+                                    {error && <p className="text-sm text-red-400">{error}</p>}
 
                                     <button
                                         type="submit"
                                         disabled={loading}
                                         className="
-                      mt-2
-                      w-full
+                      mt-2 w-full
                       rounded-2xl
                       bg-[var(--accent)]
                       py-3.5
-                      font-semibold
-                      text-black
-                      shadow-lg
-                      cursor-pointer
+                      font-semibold text-black
+                      shadow-lg cursor-pointer
                       transition
                       hover:scale-[1.03]
                       active:scale-[0.97]
@@ -234,16 +185,12 @@ export default function BuyServicePage() {
                                 <button
                                     onClick={scrollToPricing}
                                     className="
-                    inline-flex
-                    items-center
-                    justify-center
+                    inline-flex items-center justify-center
                     rounded-2xl
                     bg-[var(--accent)]
                     px-6 py-3
-                    font-semibold
-                    text-black
-                    shadow-lg
-                    cursor-pointer
+                    font-semibold text-black
+                    shadow-lg cursor-pointer
                     transition
                     hover:scale-[1.05]
                     active:scale-[0.97]
