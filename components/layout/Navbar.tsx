@@ -19,117 +19,171 @@ const mobileLinks = [
     { name: "Connect", id: "contact" },
 ];
 
+const NAV_OFFSET = 96;
+
 export default function Navbar() {
-    const containerRef = useRef<HTMLUListElement>(null);
-    const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
+    const desktopRef = useRef<HTMLUListElement>(null);
+    const mobileRef = useRef<HTMLUListElement>(null);
+
+    const desktopItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
+    const mobileItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
+
     const [active, setActive] = useState("home");
-    const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+    const [desktopIndicator, setDesktopIndicator] = useState({ left: 0, width: 0 });
+    const [mobileIndicator, setMobileIndicator] = useState({ left: 0, width: 0 });
 
     const setItemRef = useCallback(
-        (id: string) => (el: HTMLLIElement | null) => {
-            itemRefs.current[id] = el;
-        },
+        (id: string, mobile = false) =>
+            (el: HTMLLIElement | null) => {
+                if (mobile) mobileItemRefs.current[id] = el;
+                else desktopItemRefs.current[id] = el;
+            },
         []
     );
 
-    const moveIndicator = (id: string) => {
-        const el = itemRefs.current[id];
-        const container = containerRef.current;
+    /* ---------------- SCROLL ---------------- */
+    const scrollToSection = (id: string) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const y =
+            el.getBoundingClientRect().top +
+            window.pageYOffset -
+            NAV_OFFSET;
+
+        window.scrollTo({ top: y, behavior: "smooth" });
+        setActive(id);
+    };
+
+    /* ---------------- MOVE DESKTOP ---------------- */
+    const moveDesktopIndicator = (id: string) => {
+        const el = desktopItemRefs.current[id];
+        const container = desktopRef.current;
         if (!el || !container) return;
 
-        const elRect = el.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
+        const r1 = el.getBoundingClientRect();
+        const r2 = container.getBoundingClientRect();
 
-        setIndicator({
-            left: elRect.left - containerRect.left,
-            width: elRect.width,
+        setDesktopIndicator({
+            left: r1.left - r2.left,
+            width: r1.width,
         });
     };
 
+    /* ---------------- MOVE MOBILE ---------------- */
+    const moveMobileIndicator = (id: string) => {
+        const el = mobileItemRefs.current[id];
+        const container = mobileRef.current;
+        if (!el || !container) return;
+
+        const r1 = el.getBoundingClientRect();
+        const r2 = container.getBoundingClientRect();
+
+        setMobileIndicator({
+            left: r1.left - r2.left,
+            width: r1.width,
+        });
+    };
+
+    /* ---------------- SCROLL SPY ---------------- */
     useEffect(() => {
-        moveIndicator(active);
-        const onResize = () => moveIndicator(active);
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
-    }, [active]);
+        const sections = desktopLinks
+            .map((l) => document.getElementById(l.id))
+            .filter(Boolean) as HTMLElement[];
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        setActive(id);
+                        moveDesktopIndicator(id);
+
+                        // 🔥 MAP DESKTOP SECTION → MOBILE TAB
+                        if (id === "pricing") moveMobileIndicator("pricing");
+                        else if (id === "contact") moveMobileIndicator("contact");
+                        else moveMobileIndicator("home");
+                    }
+                });
+            },
+            { rootMargin: "-40% 0px -40% 0px" }
+        );
+
+        sections.forEach((s) => observer.observe(s));
+        return () => observer.disconnect();
+    }, []);
+
+    /* ---------------- INIT ---------------- */
+    useEffect(() => {
+        moveDesktopIndicator(active);
+        moveMobileIndicator("home");
+
+        window.addEventListener("resize", () => {
+            moveDesktopIndicator(active);
+            moveMobileIndicator("home");
+        });
+    }, []);
 
     return (
         <header className="sticky top-4 z-50">
             <div className="mx-auto max-w-7xl px-4 md:px-8">
                 <nav className="relative rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-4 py-3 shadow-lg">
-                    {/* Glow */}
-                    <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_70%)]" />
 
                     <div className="relative flex items-center justify-between">
                         <span className="text-lg font-semibold text-[var(--accent)]">
                             It&apos;s official
                         </span>
 
-                        {/* ---------------- DESKTOP NAV ---------------- */}
-                        <ul
-                            ref={containerRef}
-                            className="relative hidden md:flex gap-1"
-                        >
+                        {/* ---------------- DESKTOP ---------------- */}
+                        <ul ref={desktopRef} className="relative hidden md:flex gap-1">
                             <motion.li
-                                className="pointer-events-none absolute inset-y-0 rounded-xl bg-white/20 backdrop-blur-xl border border-white/30"
-                                animate={{
-                                    left: indicator.left,
-                                    width: indicator.width,
-                                }}
+                                className="absolute inset-y-0 rounded-xl bg-white/20 pointer-events-none"
+                                animate={desktopIndicator}
                                 transition={{ type: "spring", stiffness: 260, damping: 24 }}
                             />
 
-                            {desktopLinks.map((link) => {
-                                const isActive = active === link.id;
-
-                                return (
-                                    <li
-                                        key={link.id}
-                                        ref={setItemRef(link.id)}
-                                        className="relative z-10"
+                            {desktopLinks.map((link) => (
+                                <li
+                                    key={link.id}
+                                    ref={setItemRef(link.id)}
+                                    className="relative z-10"
+                                >
+                                    <button
+                                        onClick={() => scrollToSection(link.id)}
+                                        className={`px-4 py-2 text-sm font-medium text-[var(--accent)] transition ${active === link.id ? "text-white" : ""
+                                            }`}
                                     >
-                                        <a
-                                            href={`#${link.id}`}
-                                            onClick={() => setActive(link.id)}
-                                            className={`px-4 py-2 text-sm font-medium cursor-pointer transition-colors ${isActive
-                                                    ? "text-white"
-                                                    : "text-[var(--accent)] hover:text-white"
-                                                }`}
-                                        >
-                                            {link.name}
-                                        </a>
-                                    </li>
-                                );
-                            })}
+                                        {link.name}
+                                    </button>
+                                </li>
+                            ))}
                         </ul>
 
-                        {/* ---------------- MOBILE NAV (INLINE, SIMPLE) ---------------- */}
-                        <ul className="flex md:hidden gap-3">
-                            {mobileLinks.map((link) => {
-                                const isActive = active === link.id;
+                        {/* ---------------- MOBILE ---------------- */}
+                        <ul ref={mobileRef} className="relative flex md:hidden gap-2">
+                            <motion.li
+                                className="absolute inset-y-0 rounded-xl bg-white/20 pointer-events-none"
+                                animate={mobileIndicator}
+                                transition={{ type: "spring", stiffness: 260, damping: 24 }}
+                            />
 
-                                return (
-                                    <li key={link.id}>
-                                        <a
-                                            href={`#${link.id}`}
-                                            onClick={() => setActive(link.id)}
-                                            className={`
-                        rounded-xl
-                        px-3 py-2
-                        text-sm font-medium
-                        transition
-                        ${isActive
-                                                    ? "bg-white/20 text-white"
-                                                    : "text-[var(--accent)] hover:text-white"
-                                                }
-                      `}
-                                        >
-                                            {link.name}
-                                        </a>
-                                    </li>
-                                );
-                            })}
+                            {mobileLinks.map((link) => (
+                                <li
+                                    key={link.id}
+                                    ref={setItemRef(link.id, true)}
+                                    className="relative z-10"
+                                >
+                                    <button
+                                        onClick={() => scrollToSection(link.id)}
+                                        className={`px-3 py-2 text-sm font-medium text-[var(--accent)] transition ${active === link.id ? "text-white" : ""
+                                            }`}
+                                    >
+                                        {link.name}
+                                    </button>
+                                </li>
+                            ))}
                         </ul>
+
                     </div>
                 </nav>
             </div>
