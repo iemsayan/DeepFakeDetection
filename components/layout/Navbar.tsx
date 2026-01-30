@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
-const links = [
+const desktopLinks = [
     { name: "Myself", id: "home" },
     { name: "My works", id: "projects" },
     { name: "Tools", id: "about" },
@@ -13,14 +13,18 @@ const links = [
     { name: "Connect with me", id: "contact" },
 ];
 
+const mobileLinks = [
+    { name: "Myself", id: "home" },
+    { name: "Services", id: "pricing" },
+    { name: "Connect", id: "contact" },
+];
+
 export default function Navbar() {
     const containerRef = useRef<HTMLUListElement>(null);
     const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
     const [active, setActive] = useState("home");
     const [indicator, setIndicator] = useState({ left: 0, width: 0 });
-    const [open, setOpen] = useState(false);
 
-    /* ---------- Safe ref ---------- */
     const setItemRef = useCallback(
         (id: string) => (el: HTMLLIElement | null) => {
             itemRefs.current[id] = el;
@@ -28,7 +32,6 @@ export default function Navbar() {
         []
     );
 
-    /* ---------- Move indicator ---------- */
     const moveIndicator = (id: string) => {
         const el = itemRefs.current[id];
         const container = containerRef.current;
@@ -43,7 +46,6 @@ export default function Navbar() {
         });
     };
 
-    /* ---------- Sync indicator ---------- */
     useEffect(() => {
         moveIndicator(active);
         const onResize = () => moveIndicator(active);
@@ -63,12 +65,11 @@ export default function Navbar() {
                             It&apos;s official
                         </span>
 
-                        {/* ---------------- Desktop Nav ---------------- */}
+                        {/* ---------------- DESKTOP NAV ---------------- */}
                         <ul
                             ref={containerRef}
                             className="relative hidden md:flex gap-1"
                         >
-                            {/* Active indicator */}
                             <motion.li
                                 className="pointer-events-none absolute inset-y-0 rounded-xl bg-white/20 backdrop-blur-xl border border-white/30"
                                 animate={{
@@ -78,7 +79,7 @@ export default function Navbar() {
                                 transition={{ type: "spring", stiffness: 260, damping: 24 }}
                             />
 
-                            {links.map((link) => {
+                            {desktopLinks.map((link) => {
                                 const isActive = active === link.id;
 
                                 return (
@@ -90,7 +91,7 @@ export default function Navbar() {
                                         <a
                                             href={`#${link.id}`}
                                             onClick={() => setActive(link.id)}
-                                            className={`block px-4 py-2 text-sm font-medium cursor-pointer transition-colors ${isActive
+                                            className={`px-4 py-2 text-sm font-medium cursor-pointer transition-colors ${isActive
                                                     ? "text-white"
                                                     : "text-[var(--accent)] hover:text-white"
                                                 }`}
@@ -102,59 +103,34 @@ export default function Navbar() {
                             })}
                         </ul>
 
-                        {/* ---------------- Mobile Toggle ---------------- */}
-                        <button
-                            onClick={() => setOpen((v) => !v)}
-                            aria-label="Toggle menu"
-                            className="md:hidden relative z-10 flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10"
-                        >
-                            <motion.span
-                                animate={{ rotate: open ? 45 : 0, y: open ? 6 : 0 }}
-                                className="absolute h-0.5 w-5 bg-white"
-                            />
-                            <motion.span
-                                animate={{ opacity: open ? 0 : 1 }}
-                                className="absolute h-0.5 w-5 bg-white"
-                            />
-                            <motion.span
-                                animate={{ rotate: open ? -45 : 0, y: open ? -6 : 0 }}
-                                className="absolute h-0.5 w-5 bg-white"
-                            />
-                        </button>
-                    </div>
+                        {/* ---------------- MOBILE NAV (INLINE, SIMPLE) ---------------- */}
+                        <ul className="flex md:hidden gap-3">
+                            {mobileLinks.map((link) => {
+                                const isActive = active === link.id;
 
-                    {/* ---------------- Mobile Menu ---------------- */}
-                    <AnimatePresence>
-                        {open && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: "auto" }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.25, ease: "easeOut" }}
-                                className="md:hidden mt-4 overflow-hidden rounded-xl border border-white/20 bg-white/10 backdrop-blur-xl"
-                            >
-                                <ul className="flex flex-col divide-y divide-white/10">
-                                    {links.map((link) => (
-                                        <li key={link.id}>
-                                            <a
-                                                href={`#${link.id}`}
-                                                onClick={() => {
-                                                    setActive(link.id);
-                                                    setOpen(false);
-                                                }}
-                                                className={`block w-full px-5 py-4 text-base cursor-pointer transition ${active === link.id
-                                                        ? "text-white"
-                                                        : "text-[var(--accent)]"
-                                                    }`}
-                                            >
-                                                {link.name}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                                return (
+                                    <li key={link.id}>
+                                        <a
+                                            href={`#${link.id}`}
+                                            onClick={() => setActive(link.id)}
+                                            className={`
+                        rounded-xl
+                        px-3 py-2
+                        text-sm font-medium
+                        transition
+                        ${isActive
+                                                    ? "bg-white/20 text-white"
+                                                    : "text-[var(--accent)] hover:text-white"
+                                                }
+                      `}
+                                        >
+                                            {link.name}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
                 </nav>
             </div>
         </header>
