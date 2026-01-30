@@ -2,7 +2,7 @@ export const projects = [
     {
         title: "Revives EcoTech – Website",
         description: [
-            "Built 5+ real production features like dashboards and a careers page",
+            "Built 5+ real production features like dashboards, login, signup and careers page",
             "Added Firebase login and security",
             "Connected frontend and backend properly so the site works smoothly and loads faster",
         ],
