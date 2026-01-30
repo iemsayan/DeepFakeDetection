@@ -1,15 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Section from "@/components/ui/Section";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import Footer from "@/components/sections/Footer";
 
 export default function BuyServicePage() {
+    const router = useRouter();
+
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
+
+    function scrollToPricing() {
+        router.push("/");
+
+        setTimeout(() => {
+            const el = document.getElementById("pricing");
+            if (!el) return;
+
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }, 350);
+    }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -52,7 +68,8 @@ export default function BuyServicePage() {
 
     return (
         <>
-            <Section className="mt-16 sm:mt-20">
+            {/* Intentional gap from Services */}
+            <Section className="mt-12 sm:mt-20">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -64,20 +81,33 @@ export default function BuyServicePage() {
             border border-white/20
             bg-white/10
             backdrop-blur-xl
-            px-5 py-6
-            sm:px-8 sm:py-10
             shadow-xl
           "
                 >
-                    {/* Back to Services */}
-                    <Link
-                        href="/#pricing"
+                    {/* Glow */}
+                    <div
+                        className="
+              pointer-events-none
+              absolute
+              inset-0
+              z-0
+              rounded-3xl
+              shadow-[0_0_40px_rgba(124,124,255,0.3)]
+            "
+                    />
+
+                    {/* Back Button */}
+                    <button
+                        type="button"
+                        onClick={scrollToPricing}
                         className="
               absolute
+              z-20
               left-4 top-3
               sm:left-6 sm:top-6
               inline-flex
               items-center
+              gap-1
               rounded-lg
               bg-[var(--accent)]
               px-3 py-1.5
@@ -85,31 +115,26 @@ export default function BuyServicePage() {
               font-semibold
               text-black
               shadow-md
-              transition
-              hover:scale-105
+              cursor-pointer
+              transition-all
+              duration-300
+              hover:-translate-x-1
+              hover:shadow-lg
               active:scale-95
             "
                     >
                         ← Services
-                    </Link>
+                    </button>
 
-                    {/* Glow */}
-                    <div
-                        className="
-              pointer-events-none
-              absolute inset-0
-              rounded-3xl
-              shadow-[0_0_40px_rgba(124,124,255,0.3)]
-            "
-                    />
-
-                    {/* CONTENT */}
-                    <div className="relative z-10 pt-10 sm:pt-12">
+                    {/* CONTENT — increased top padding */}
+                    <div className="relative z-10 px-5 py-6 sm:px-8 sm:py-10 pt-12 sm:pt-14">
                         {!success ? (
                             <>
                                 <h1 className="mb-2 text-2xl sm:text-4xl font-extrabold">
                                     Get Your{" "}
-                                    <span className="text-[var(--accent)]">Free Portfolio</span>
+                                    <span className="text-[var(--accent)]">
+                                        Free Portfolio
+                                    </span>
                                 </h1>
 
                                 <p className="mb-6 text-sm sm:text-base text-[var(--text-secondary)]">
@@ -122,13 +147,13 @@ export default function BuyServicePage() {
                                             name="firstName"
                                             placeholder="First Name"
                                             required
-                                            className="input text-sm sm:text-base"
+                                            className="input"
                                         />
                                         <input
                                             name="lastName"
                                             placeholder="Last Name"
                                             required
-                                            className="input text-sm sm:text-base"
+                                            className="input"
                                         />
                                     </div>
 
@@ -136,7 +161,7 @@ export default function BuyServicePage() {
                                         name="occupation"
                                         placeholder="Occupation"
                                         required
-                                        className="input text-sm sm:text-base"
+                                        className="input"
                                     />
 
                                     <input
@@ -144,7 +169,7 @@ export default function BuyServicePage() {
                                         type="email"
                                         placeholder="Email address"
                                         required
-                                        className="input text-sm sm:text-base"
+                                        className="input"
                                     />
 
                                     <textarea
@@ -152,10 +177,9 @@ export default function BuyServicePage() {
                                         placeholder="Describe your portfolio needs"
                                         rows={4}
                                         required
-                                        className="input resize-none text-sm sm:text-base"
+                                        className="input resize-none"
                                     />
 
-                                    {/* Deadline */}
                                     <div className="space-y-1.5">
                                         <p className="text-xs text-[var(--text-secondary)]">
                                             📅 Deadline helps me plan your delivery timeline
@@ -164,7 +188,7 @@ export default function BuyServicePage() {
                                             name="deadline"
                                             type="date"
                                             required
-                                            className="input text-sm sm:text-base"
+                                            className="input"
                                         />
                                     </div>
 
@@ -178,14 +202,13 @@ export default function BuyServicePage() {
                                         className="
                       mt-2
                       w-full
-                      cursor-pointer
                       rounded-2xl
                       bg-[var(--accent)]
                       py-3.5
-                      text-sm sm:text-base
                       font-semibold
                       text-black
                       shadow-lg
+                      cursor-pointer
                       transition
                       hover:scale-[1.03]
                       active:scale-[0.97]
@@ -197,12 +220,7 @@ export default function BuyServicePage() {
                                 </form>
                             </>
                         ) : (
-                            /* THANK YOU STATE */
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="text-center"
-                            >
+                            <div className="text-center">
                                 <h2 className="mb-3 text-3xl font-extrabold text-[var(--accent)]">
                                     🎉 Thank You!
                                 </h2>
@@ -213,8 +231,8 @@ export default function BuyServicePage() {
                                     I’ll contact you shortly via Gmail.
                                 </p>
 
-                                <Link
-                                    href="/#pricing"
+                                <button
+                                    onClick={scrollToPricing}
                                     className="
                     inline-flex
                     items-center
@@ -222,18 +240,18 @@ export default function BuyServicePage() {
                     rounded-2xl
                     bg-[var(--accent)]
                     px-6 py-3
-                    text-sm sm:text-base
                     font-semibold
                     text-black
                     shadow-lg
+                    cursor-pointer
                     transition
                     hover:scale-[1.05]
                     active:scale-[0.97]
                   "
                                 >
                                     Back to Services
-                                </Link>
-                            </motion.div>
+                                </button>
+                            </div>
                         )}
                     </div>
                 </motion.div>

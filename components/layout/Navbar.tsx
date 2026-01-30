@@ -13,8 +13,6 @@ const links = [
     { name: "Connect with me", id: "contact" },
 ];
 
-const NAV_OFFSET = 96;
-
 export default function Navbar() {
     const containerRef = useRef<HTMLUListElement>(null);
     const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
@@ -22,9 +20,7 @@ export default function Navbar() {
     const [indicator, setIndicator] = useState({ left: 0, width: 0 });
     const [open, setOpen] = useState(false);
 
-    /* --------------------------------------------
-       SAFE REF CALLBACK (FIXES TS ERROR)
-    --------------------------------------------- */
+    /* ---------- Safe ref ---------- */
     const setItemRef = useCallback(
         (id: string) => (el: HTMLLIElement | null) => {
             itemRefs.current[id] = el;
@@ -32,27 +28,7 @@ export default function Navbar() {
         []
     );
 
-    /* --------------------------------------------
-       Scroll handler
-    --------------------------------------------- */
-    const scrollToSection = (id: string) => {
-        const section = document.getElementById(id);
-        if (!section) return;
-
-        const y =
-            section.getBoundingClientRect().top +
-            window.pageYOffset -
-            NAV_OFFSET;
-
-        window.scrollTo({ top: y, behavior: "smooth" });
-
-        setActive(id);
-        setOpen(false);
-    };
-
-    /* --------------------------------------------
-       Indicator movement
-    --------------------------------------------- */
+    /* ---------- Move indicator ---------- */
     const moveIndicator = (id: string) => {
         const el = itemRefs.current[id];
         const container = containerRef.current;
@@ -67,33 +43,7 @@ export default function Navbar() {
         });
     };
 
-    /* --------------------------------------------
-       Section observer
-    --------------------------------------------- */
-    useEffect(() => {
-        const sections = links
-            .map((l) => document.getElementById(l.id))
-            .filter(Boolean) as HTMLElement[];
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActive(entry.target.id);
-                        moveIndicator(entry.target.id);
-                    }
-                });
-            },
-            { rootMargin: "-40% 0px -40% 0px" }
-        );
-
-        sections.forEach((section) => observer.observe(section));
-        return () => observer.disconnect();
-    }, []);
-
-    /* --------------------------------------------
-       Sync indicator
-    --------------------------------------------- */
+    /* ---------- Sync indicator ---------- */
     useEffect(() => {
         moveIndicator(active);
         const onResize = () => moveIndicator(active);
@@ -134,19 +84,19 @@ export default function Navbar() {
                                 return (
                                     <li
                                         key={link.id}
-                                        ref={setItemRef(link.id)} // ✅ TS-safe ref
+                                        ref={setItemRef(link.id)}
                                         className="relative z-10"
                                     >
-                                        <button
-                                            type="button"
-                                            onClick={() => scrollToSection(link.id)}
-                                            className={`block px-4 py-2 text-sm font-medium transition-colors ${isActive
+                                        <a
+                                            href={`#${link.id}`}
+                                            onClick={() => setActive(link.id)}
+                                            className={`block px-4 py-2 text-sm font-medium cursor-pointer transition-colors ${isActive
                                                     ? "text-white"
                                                     : "text-[var(--accent)] hover:text-white"
                                                 }`}
                                         >
                                             {link.name}
-                                        </button>
+                                        </a>
                                     </li>
                                 );
                             })}
@@ -173,7 +123,7 @@ export default function Navbar() {
                         </button>
                     </div>
 
-                    {/* ---------------- Mobile Dropdown ---------------- */}
+                    {/* ---------------- Mobile Menu ---------------- */}
                     <AnimatePresence>
                         {open && (
                             <motion.div
@@ -186,16 +136,19 @@ export default function Navbar() {
                                 <ul className="flex flex-col divide-y divide-white/10">
                                     {links.map((link) => (
                                         <li key={link.id}>
-                                            <button
-                                                type="button"
-                                                onClick={() => scrollToSection(link.id)}
-                                                className={`w-full text-left px-5 py-4 text-base transition ${active === link.id
+                                            <a
+                                                href={`#${link.id}`}
+                                                onClick={() => {
+                                                    setActive(link.id);
+                                                    setOpen(false);
+                                                }}
+                                                className={`block w-full px-5 py-4 text-base cursor-pointer transition ${active === link.id
                                                         ? "text-white"
                                                         : "text-[var(--accent)]"
                                                     }`}
                                             >
                                                 {link.name}
-                                            </button>
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>

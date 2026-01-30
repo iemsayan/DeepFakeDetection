@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* -----------------------------
+   CSS VARIABLES
+-------------------------------- */
 :root {
   /* Backgrounds */
   --bg-main: #0b0d10;
@@ -25,12 +28,32 @@ html {
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: var(--font-main), system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+  font-family: var(--font-main), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
   letter-spacing: 0.01em;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  /* IMPORTANT: fixes mobile click + scroll issues */
+  overscroll-behavior: none;
+}
+
+/* -----------------------------
+   Sticky navbar offset fix
+   (CRITICAL FOR MOBILE NAV)
+-------------------------------- */
+
+/* Any section with an id will respect navbar height */
+section[id] {
+  scroll-margin-top: 120px;
+}
+
+/* Smaller offset on mobile */
+@media (max-width: 768px) {
+  section[id] {
+    scroll-margin-top: 96px;
+  }
 }
 
 /* -----------------------------
@@ -65,6 +88,10 @@ a {
 
 button {
   font-family: inherit;
+  cursor: pointer;
+
+  /* IMPORTANT: ensures mobile taps always register */
+  touch-action: manipulation;
 }
 
 /* -----------------------------
@@ -77,7 +104,7 @@ button {
 }
 
 /* -----------------------------
-   Form Inputs (NEW – used in Buy Service)
+   Form Inputs
 -------------------------------- */
 
 .input {
@@ -89,7 +116,9 @@ button {
   color: var(--text-primary);
   outline: none;
   backdrop-filter: blur(10px);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
     background-color 0.2s ease;
 }
 
