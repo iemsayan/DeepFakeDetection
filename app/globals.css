@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* -----------------------------
-   CSS VARIABLES
+   CSS VARIABLES (DESIGN SYSTEM)
 -------------------------------- */
 :root {
   /* Backgrounds */
@@ -13,8 +13,10 @@
   --text-primary: #f5f7fa;
   --text-secondary: #a1a1aa;
 
-  /* Accent */
-  --accent: #7c7cff;
+  /* Accent — image-driven neon signal */
+  --accent: #d6ff00;                 /* neon yellow-green */
+  --accent-soft: rgba(214, 255, 0, 0.35);
+  --accent-glow: rgba(214, 255, 0, 0.55);
 }
 
 /* -----------------------------
@@ -128,7 +130,7 @@ button {
 
 .input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(124, 124, 255, 0.25);
+  box-shadow: 0 0 0 2px var(--accent-soft);
   background: rgba(255, 255, 255, 0.12);
 }
 

@@ -13,44 +13,54 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sayandeep Ghosh — Freelance Developer",
-    template: "%s · Sayandeep Ghosh",
+    default: "Deepfake Detection Lab",
+    template: "%s · Deepfake Detection Lab",
   },
   description:
-    "Freelance Frontend Developer building fast, scalable, and production-ready web experiences for startups and modern businesses.",
+    "A research-driven deepfake detection system leveraging deep learning to identify AI-generated facial imagery through spatial and frequency-based analysis.",
   keywords: [
-    "Sayandeep Ghosh",
-    "Frontend Developer",
-    "Freelance Web Developer",
-    "Next.js Developer",
-    "React Developer",
-    "Tailwind CSS",
+    "Deepfake Detection",
+    "AI Generated Images",
+    "Computer Vision",
+    "Deep Learning",
+    "ConvNeXt",
+    "Face Manipulation Detection",
+    "Image Forensics",
+    "FastAPI Deep Learning",
+    "Deepfake Research",
   ],
-  authors: [{ name: "Sayandeep Ghosh" }],
-  creator: "Sayandeep Ghosh",
-  metadataBase: new URL("https://your-portfolio.vercel.app"),
+  authors: [
+    { name: "Sayandeep Ghosh" },
+    { name: "Ajay" },
+    { name: "Harsh" },
+    { name: "Naveen" },
+  ],
+  creator: "Deepfake Detection Lab",
+  metadataBase: new URL("https://deepfake-detection-lab.vercel.app"),
+
   openGraph: {
-    title: "Sayandeep Ghosh — Freelance Frontend Developer",
+    title: "Deepfake Detection Lab",
     description:
-      "I build fast, scalable, and conversion-focused web experiences for startups and modern businesses.",
-    url: "https://your-portfolio.vercel.app",
-    siteName: "Sayandeep Ghosh",
+      "An open research system for detecting AI-generated facial imagery using modern deep learning architectures.",
+    url: "https://deepfake-detection-lab.vercel.app",
+    siteName: "Deepfake Detection Lab",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Sayandeep Ghosh — Freelance Frontend Developer",
+        alt: "Deepfake Detection Lab — AI Image Forensics",
       },
     ],
     locale: "en_US",
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Sayandeep Ghosh — Freelance Frontend Developer",
+    title: "Deepfake Detection Lab",
     description:
-      "Building fast, scalable, and production-ready web experiences.",
+      "Research-driven deepfake detection using spatial and frequency-domain deep learning.",
     images: ["/og-image.png"],
   },
 };
@@ -63,16 +73,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={spaceGrotesk.variable}>
       <body className="bg-[var(--bg-main)] text-[var(--text-primary)] antialiased overflow-x-hidden">
+
         {/* Background */}
         <Starfield />
 
         {/* Navigation */}
         <Navbar />
 
-        {/* Content */}
+        {/* Main Content */}
         <main className="relative z-10">
           {children}
         </main>
+
       </body>
     </html>
   );

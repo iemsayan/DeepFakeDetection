@@ -7,28 +7,32 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const QNA = [
     {
-        q: "Why is your pricing low?",
-        a: "I’m a student, so I keep my pricing affordable. That doesn’t mean low quality. Your project will be clean, production-ready, and properly tested.",
+        q: "How reliable is deepfake detection in real-world scenarios?",
+        a: "Deepfake detection is inherently challenging. While the current system performs well on curated datasets, real-world performance depends on image quality, generation method, and domain shift. This project explicitly documents limitations instead of hiding them.",
     },
     {
-        q: "Why is my project taking time?",
-        a: "Most projects are completed within 72 hours after confirmation. If it takes a bit longer, it’s because I’m focusing on quality and making sure everything works properly.",
+        q: "Why does the system focus only on facial regions?",
+        a: "Deepfake manipulation artifacts are concentrated around facial textures, edges, and blending regions. Cropping faces removes background noise and improves the model’s sensitivity to subtle inconsistencies.",
     },
     {
-        q: "Do I need to pay before getting the code?",
-        a: "No. First, I build and host the project and show it to you. If you’re satisfied, then you pay and I’ll share the complete source code with you.",
+        q: "Why does the image model not achieve extremely high accuracy?",
+        a: "Pure spatial CNNs typically saturate around 60–70% accuracy on complex deepfake datasets. Higher performance usually requires frequency-domain or temporal information, which this project is actively exploring.",
     },
     {
-        q: "Do you handle domain and deployment?",
-        a: "Yes. You need to purchase the domain or hosting, and I’ll handle the setup, deployment, and production configuration.",
+        q: "What makes video deepfake detection more difficult?",
+        a: "Video deepfake detection requires modeling temporal consistency, motion patterns, and frame-to-frame coherence. A frame-level detector alone is insufficient, which is why the video model is under careful research rather than rushed release.",
     },
     {
-        q: "Do you only make portfolio & small websites?",
-        a: "No. I also build more complex websites, but right now I’m limiting freelance work to smaller projects due to time constraints.",
+        q: "What datasets are used for training and evaluation?",
+        a: "Initial experiments use curated image datasets with verified REAL and FAKE labels. Planned migration to FaceForensics++ will improve benchmarking consistency and generalization.",
     },
     {
-        q: "What if I face issues later?",
-        a: "I provide free maintenance and bug fixes for up to 6 months after delivery. If something breaks later, feel free to reach out.",
+        q: "Is this system meant for production use?",
+        a: "The deployed model demonstrates feasibility and research insights. It is suitable for experimentation, prototyping, and integration testing, but should be combined with additional safeguards for high-stakes production environments.",
+    },
+    {
+        q: "Is the project open-source?",
+        a: "Yes. The inference backend and trained model weights are open-sourced to promote transparency, reproducibility, and community-driven improvements.",
     },
 ];
 
@@ -43,14 +47,14 @@ export default function QnA() {
                 <div className="max-w-3xl">
                     <Reveal>
                         <h2 className="mb-4 text-left text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-                            Questions{" "}
-                            <span className="text-[var(--accent)]">Clients Ask</span>
+                            Common <span className="text-[var(--accent)]">Questions</span>
                         </h2>
                     </Reveal>
 
                     <Reveal delay={0.08}>
                         <p className="mb-14 text-left text-base sm:text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed">
-                            Some common questions clients usually ask before starting a project.
+                            Answers to frequently asked questions about the deepfake detection
+                            models, their limitations, and ongoing research direction.
                         </p>
                     </Reveal>
                 </div>
@@ -77,7 +81,6 @@ export default function QnA() {
                       transition-colors
                     "
                                     >
-                                        {/* Question text with underline */}
                                         <span
                                             className="
                         relative
@@ -130,7 +133,7 @@ export default function QnA() {
                 {/* Footer */}
                 <Reveal delay={0.35}>
                     <p className="mt-14 text-center text-sm md:text-base text-[var(--text-secondary)]">
-                        Still have questions? You can reach out from the{" "}
+                        Have additional research questions or suggestions? Reach out via the{" "}
                         <a
                             href="#contact"
                             className="

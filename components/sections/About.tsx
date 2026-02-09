@@ -4,27 +4,17 @@ import Section from "@/components/ui/Section";
 import Stagger, { staggerItem } from "@/components/ui/Stagger";
 import { motion } from "framer-motion";
 
-const SKILLS = [
-    // Core
-    "Java",
-    "Python",
-
-    // Frontend
-    "React",
-    "Next.js",
-    "Tailwind CSS",
-
-    // Backend & Infra
-    "Node.js",
-    "Firebase",
-    "Vercel",
-    "Render",
-    "GoDaddy",
-
-    // AI Tools
-    "ChatGPT",
-    "ChatGPT Go",
-    "Gemini Pro",
+const FOCUS_AREAS = [
+    "Deepfake Detection",
+    "Face Manipulation Analysis",
+    "Spatial CNN Models",
+    "Frequency-Domain Analysis (FFT)",
+    "Hybrid Spatial–Frequency Models",
+    "ConvNeXt Architectures",
+    "PyTorch",
+    "FastAPI Deployment",
+    "Model Evaluation & Generalization",
+    "FaceForensics++ (Planned)",
 ] as const;
 
 export default function About() {
@@ -32,7 +22,7 @@ export default function About() {
         <Section id="about" className="mt-32 md:mt-48 relative">
             <div className="mx-auto max-w-7xl grid gap-14 md:gap-20 md:grid-cols-2 items-start px-4 sm:px-6">
 
-                {/* LEFT — ABOUT TEXT */}
+                {/* LEFT — ABOUT PROJECT */}
                 <Stagger>
                     <motion.h2
                         variants={staggerItem}
@@ -48,7 +38,7 @@ export default function About() {
               hover:after:w-full
             "
                     >
-                        About <span className="text-[var(--accent)]">Me</span>
+                        About the <span className="text-[var(--accent)]">Project</span>
                     </motion.h2>
 
                     <motion.p
@@ -62,10 +52,11 @@ export default function About() {
               group
             "
                     >
-                        I’m a freelance frontend developer who builds fast, clean, and
-                        good-looking websites that actually work in real life — not just demos.
+                        This project focuses on detecting AI-generated deepfakes using modern
+                        deep learning techniques. The goal is to build robust, transparent,
+                        and research-driven systems that can identify manipulated facial
+                        content with high reliability.
 
-                        {/* subtle underline on hover */}
                         <span
                             className="
                 pointer-events-none
@@ -74,7 +65,7 @@ export default function About() {
                 bg-[var(--accent)]
                 opacity-60
                 transition-all duration-300
-                group-hover:w-24
+                group-hover:w-28
               "
                         />
                     </motion.p>
@@ -90,9 +81,11 @@ export default function About() {
               group
             "
                     >
-                        I care a lot about performance, clean code, and smooth UI. I also use
-                        AI tools daily to speed up development, debug faster, and ship better
-                        quality work within tight deadlines.
+                        The work emphasizes correct data preprocessing, face-centric analysis,
+                        and carefully fine-tuned neural networks. Rather than chasing inflated
+                        accuracy numbers, the focus is on understanding limitations and
+                        systematically improving detection through spatial and frequency-domain
+                        modeling.
 
                         <span
                             className="
@@ -102,13 +95,13 @@ export default function About() {
                 bg-[var(--accent)]
                 opacity-60
                 transition-all duration-300
-                group-hover:w-32
+                group-hover:w-40
               "
                         />
                     </motion.p>
                 </Stagger>
 
-                {/* RIGHT — SKILLS */}
+                {/* RIGHT — FOCUS AREAS / TECH */}
                 <Stagger delay={0.15}>
                     <motion.h3
                         variants={staggerItem}
@@ -124,16 +117,16 @@ export default function About() {
               hover:after:w-full
             "
                     >
-                        Skills, Tools & AI
+                        Research Focus & Stack
                     </motion.h3>
 
                     <motion.ul
                         variants={staggerItem}
                         className="mt-6 flex flex-wrap gap-3"
                     >
-                        {SKILLS.map((skill) => (
+                        {FOCUS_AREAS.map((item) => (
                             <motion.li
-                                key={skill}
+                                key={item}
                                 variants={staggerItem}
                                 className="
                   relative
@@ -156,7 +149,7 @@ export default function About() {
                   hover:after:w-1/2
                 "
                             >
-                                {skill}
+                                {item}
                             </motion.li>
                         ))}
                     </motion.ul>

@@ -1,95 +1,53 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-const desktopLinks = [
-    { name: "Myself", id: "home" },
-    { name: "My works", id: "projects" },
-    { name: "Tools", id: "about" },
-    { name: "Workflow", id: "process" },
-    { name: "Services", id: "pricing" },
+const links = [
+    { name: "Home", id: "home" },
+    { name: "Models", id: "products" }, // ✅ FIXED
+    { name: "Pipeline", id: "process" },
     { name: "FAQ", id: "qna" },
-    { name: "Connect with me", id: "contact" },
+    { name: "Contact", id: "contact" },
 ];
-
-const mobileLinks = [
-    { name: "Myself", id: "home" },
-    { name: "Services", id: "pricing" },
-    { name: "Connect", id: "contact" },
-];
-
-const NAV_OFFSET = 96;
 
 export default function Navbar() {
-    const desktopRef = useRef<HTMLUListElement>(null);
-    const mobileRef = useRef<HTMLUListElement>(null);
-
-    const desktopItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
-    const mobileItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
-
+    const navRef = useRef<HTMLUListElement>(null);
+    const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
     const [active, setActive] = useState("home");
-    const [desktopIndicator, setDesktopIndicator] = useState({ left: 0, width: 0 });
-    const [mobileIndicator, setMobileIndicator] = useState({ left: 0, width: 0 });
+    const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 
-    const setItemRef = useCallback(
-        (id: string, mobile = false) =>
-            (el: HTMLLIElement | null) => {
-                if (mobile) mobileItemRefs.current[id] = el;
-                else desktopItemRefs.current[id] = el;
-            },
-        []
-    );
-
-    /* ---------------- SCROLL ---------------- */
+    /* ---------- SCROLL TO SECTION ---------- */
     const scrollToSection = (id: string) => {
         const el = document.getElementById(id);
         if (!el) return;
 
-        const y =
-            el.getBoundingClientRect().top +
-            window.pageYOffset -
-            NAV_OFFSET;
-
-        window.scrollTo({ top: y, behavior: "smooth" });
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
         setActive(id);
     };
 
-    /* ---------------- MOVE DESKTOP ---------------- */
-    const moveDesktopIndicator = (id: string) => {
-        const el = desktopItemRefs.current[id];
-        const container = desktopRef.current;
+    /* ---------- MOVE INDICATOR ---------- */
+    const moveIndicator = (id: string) => {
+        const el = itemRefs.current[id];
+        const container = navRef.current;
         if (!el || !container) return;
 
         const r1 = el.getBoundingClientRect();
         const r2 = container.getBoundingClientRect();
 
-        setDesktopIndicator({
+        setIndicator({
             left: r1.left - r2.left,
             width: r1.width,
         });
     };
 
-    /* ---------------- MOVE MOBILE ---------------- */
-    const moveMobileIndicator = (id: string) => {
-        const el = mobileItemRefs.current[id];
-        const container = mobileRef.current;
-        if (!el || !container) return;
-
-        const r1 = el.getBoundingClientRect();
-        const r2 = container.getBoundingClientRect();
-
-        setMobileIndicator({
-            left: r1.left - r2.left,
-            width: r1.width,
-        });
-    };
-
-    /* ---------------- SCROLL SPY ---------------- */
+    /* ---------- SCROLL SPY ---------- */
     useEffect(() => {
-        const sections = desktopLinks
+        const sections = links
             .map((l) => document.getElementById(l.id))
             .filter(Boolean) as HTMLElement[];
+
+        if (!sections.length) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -97,86 +55,75 @@ export default function Navbar() {
                     if (entry.isIntersecting) {
                         const id = entry.target.id;
                         setActive(id);
-                        moveDesktopIndicator(id);
-
-                        // 🔥 MAP DESKTOP SECTION → MOBILE TAB
-                        if (id === "pricing") moveMobileIndicator("pricing");
-                        else if (id === "contact") moveMobileIndicator("contact");
-                        else moveMobileIndicator("home");
+                        moveIndicator(id);
                     }
                 });
             },
-            { rootMargin: "-40% 0px -40% 0px" }
+            {
+                rootMargin: "-35% 0px -35% 0px",
+            }
         );
 
         sections.forEach((s) => observer.observe(s));
         return () => observer.disconnect();
     }, []);
 
-    /* ---------------- INIT ---------------- */
+    /* ---------- INIT & RESIZE ---------- */
     useEffect(() => {
-        moveDesktopIndicator(active);
-        moveMobileIndicator("home");
+        requestAnimationFrame(() => moveIndicator(active));
 
-        window.addEventListener("resize", () => {
-            moveDesktopIndicator(active);
-            moveMobileIndicator("home");
-        });
-    }, []);
+        const onResize = () => moveIndicator(active);
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, [active]);
 
     return (
         <header className="sticky top-4 z-50">
-            <div className="mx-auto max-w-7xl px-4 md:px-8">
-                <nav className="relative rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-4 py-3 shadow-lg">
+            <div className="mx-auto max-w-7xl px-4">
+                <nav className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-4 py-3 shadow-lg">
+                    <div className="flex items-center justify-between gap-4">
 
-                    <div className="relative flex items-center justify-between">
-                        <span className="text-lg font-semibold text-[var(--accent)]">
-                            It&apos;s official
+                        {/* Brand */}
+                        <span className="text-sm sm:text-lg font-semibold text-[var(--accent)] whitespace-nowrap">
+                            Deepfake Detection using CNN & Transfer Learning
                         </span>
 
-                        {/* ---------------- DESKTOP ---------------- */}
-                        <ul ref={desktopRef} className="relative hidden md:flex gap-1">
+                        {/* Navigation */}
+                        <ul
+                            ref={navRef}
+                            className="relative flex gap-1 overflow-x-auto scrollbar-none"
+                        >
+                            {/* Sliding indicator */}
                             <motion.li
                                 className="absolute inset-y-0 rounded-xl bg-white/20 pointer-events-none"
-                                animate={desktopIndicator}
-                                transition={{ type: "spring", stiffness: 260, damping: 24 }}
+                                animate={indicator}
+                                transition={{ type: "spring", stiffness: 260, damping: 26 }}
                             />
 
-                            {desktopLinks.map((link) => (
+                            {links.map((link) => (
                                 <li
                                     key={link.id}
-                                    ref={setItemRef(link.id)}
+                                    ref={(el) => {
+                                        itemRefs.current[link.id] = el;
+                                    }}
                                     className="relative z-10"
                                 >
                                     <button
                                         onClick={() => scrollToSection(link.id)}
-                                        className={`px-4 py-2 text-sm font-medium text-[var(--accent)] transition ${active === link.id ? "text-white" : ""
-                                            }`}
-                                    >
-                                        {link.name}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-
-                        {/* ---------------- MOBILE ---------------- */}
-                        <ul ref={mobileRef} className="relative flex md:hidden gap-2">
-                            <motion.li
-                                className="absolute inset-y-0 rounded-xl bg-white/20 pointer-events-none"
-                                animate={mobileIndicator}
-                                transition={{ type: "spring", stiffness: 260, damping: 24 }}
-                            />
-
-                            {mobileLinks.map((link) => (
-                                <li
-                                    key={link.id}
-                                    ref={setItemRef(link.id, true)}
-                                    className="relative z-10"
-                                >
-                                    <button
-                                        onClick={() => scrollToSection(link.id)}
-                                        className={`px-3 py-2 text-sm font-medium text-[var(--accent)] transition ${active === link.id ? "text-white" : ""
-                                            }`}
+                                        className={`
+                                          relative px-3 sm:px-4 py-2
+                                          text-sm font-medium whitespace-nowrap
+                                          transition
+                                          ${active === link.id
+                                                ? "text-white"
+                                                : "text-[var(--accent)]"}
+                                          after:absolute after:left-0 after:-bottom-1
+                                          after:h-[2px] after:w-0
+                                          after:bg-[var(--accent)]
+                                          after:transition-all after:duration-300
+                                          hover:after:w-full
+                                          ${active === link.id ? "after:w-full" : ""}
+                                        `}
                                     >
                                         {link.name}
                                     </button>

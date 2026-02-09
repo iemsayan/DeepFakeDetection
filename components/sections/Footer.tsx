@@ -16,7 +16,7 @@ export default function Footer() {
             <div className="relative mx-auto max-w-7xl px-4 md:px-8">
                 <div className="border-t border-white/10 py-16 sm:py-20 md:py-28 text-center">
 
-                    {/* Name */}
+                    {/* Project / Lab Name */}
                     <h2
                         className="
               text-[clamp(2.2rem,8vw,6.5rem)]
@@ -26,12 +26,12 @@ export default function Footer() {
               text-white/90
             "
                     >
-                        SAYANDEEP&nbsp;GHOSH
+                        DEEPFAKE&nbsp;DETECTION&nbsp;
                     </h2>
 
                     {/* Footer text */}
                     <p className="mt-5 sm:mt-6 text-xs sm:text-sm md:text-base text-white/40">
-                        © 2026 · Created &amp; Owned by Sayandeep Ghosh
+                        © 2026 · Built by Sayandeep, Ajay, Harsh &amp; Naveen
                     </p>
 
                 </div>

@@ -2,143 +2,164 @@
 
 import Section from "@/components/ui/Section";
 import MotionDiv from "@/components/ui/MotionDiv";
-import TypeWriterName from "@/components/ui/TypeWriterName";
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
+
+const stats = [
+  { label: "Accuracy", value: "68%" },
+  { label: "Model", value: "ConvNeXt-Base" },
+  { label: "Domain", value: "Face-centric" },
+  { label: "Latency", value: "<300ms" },
+];
 
 export default function Hero() {
-    const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion();
 
-    return (
-        <Section
-            id="home"
-            className="min-h-screen flex items-center pt-28 sm:pt-32 md:pt-0"
-        >
-            <div className="mx-auto max-w-7xl grid gap-16 md:grid-cols-2 items-center px-6">
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
-                {/* LEFT — TEXT */}
-                <MotionDiv>
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-extrabold leading-[1.05] tracking-tight">
-                        <span className="block">Hi, I’m</span>
-                        <span className="block">
-                            <TypeWriterName />
-                        </span>
-                    </h1>
+  return (
+    <Section
+      id="home"
+      className="relative min-h-screen flex items-center pt-24 md:pt-0 overflow-hidden"
+    >
+      {/* BACKGROUND */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,var(--accent-soft),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.7))]" />
+      </div>
 
-                    <h1 className="mt-2 text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-extrabold leading-[1.05] tracking-tight">
-                        Ghosh
-                    </h1>
+      <div className="relative z-10 mx-auto max-w-7xl px-5 grid gap-12 md:gap-20 md:grid-cols-2 items-center">
 
-                    <p className="mt-8 max-w-xl text-xl md:text-2xl text-[var(--text-secondary)] leading-relaxed">
-                        Freelance Developer building high-quality, fast &amp;
-                        production-ready web experiences.
-                    </p>
+        {/* LEFT — COPY */}
+        <MotionDiv>
+          <span className="inline-block mb-4 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs tracking-wide text-[var(--accent)]">
+            Deep Learning Research System
+          </span>
 
-                    <p className="mt-6 text-sm md:text-base text-[var(--text-secondary)]">
-                        *Available for freelance work.
-                    </p>
+          <h1 className="text-[clamp(2.4rem,8vw,5.5rem)] font-extrabold leading-[1.08] tracking-tight">
+            Deepfake
+            <span className="block text-[var(--accent)] drop-shadow-[0_0_16px_var(--accent-glow)]">
+              Detection
+            </span>
+            Engine
+          </h1>
 
-                    {/* CTA */}
-                    <div className="mt-10 flex flex-wrap gap-4">
-                        <a
-                            href="#pricing"
-                            className="
-                relative inline-flex items-center justify-center
-                rounded-2xl bg-[var(--accent)]
-                px-8 py-4 text-base md:text-lg
-                font-semibold text-black
-                transition hover:opacity-90
+          <p className="mt-6 max-w-xl text-sm sm:text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
+            A face-centric deep learning system that detects AI-generated
+            imagery by analyzing subtle spatial manipulation artifacts.
+          </p>
+
+          {/* CTA — MOBILE OPTIMIZED */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <button
+              onClick={() => scrollTo("pricing")}
+              className="
+                w-full sm:w-auto
+                rounded-xl
+                bg-[var(--accent)]
+                px-8 py-4
+                text-base font-semibold
+                text-black
+                shadow-[0_0_40px_var(--accent-glow)]
+                active:scale-[0.97]
+                transition
               "
-                        >
-                            My Services
-                        </a>
+            >
+              Run Detection
+            </button>
 
-                        <a
-                            href="#projects"
-                            className="
-                relative inline-flex items-center justify-center
-                rounded-2xl border border-white/20
+            <button
+              onClick={() => scrollTo("process")}
+              className="
+                w-full sm:w-auto
+                rounded-xl
+                border border-white/20
                 bg-white/10 backdrop-blur
-                px-8 py-4 text-base md:text-lg
-                font-medium transition hover:bg-white/20
+                px-8 py-4
+                text-base font-medium
+                transition hover:bg-white/20
               "
-                        >
-                            View My Previous Works
-                        </a>
-                    </div>
-                </MotionDiv>
+            >
+              How it Works
+            </button>
+          </div>
+        </MotionDiv>
 
-                {/* RIGHT — IMAGE */}
-                <motion.div
-                    initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-                    animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="relative mx-auto flex items-center justify-center"
-                >
-                    {/* Glass Card */}
-                    <div
-                        className="
-              relative
-              rounded-3xl
-              bg-white/10
-              backdrop-blur-xl
-              border border-white/20
-              shadow-2xl
-              p-6
-              overflow-hidden
-            "
-                    >
-                        {/* INNER GLOW (comes from the box) */}
-                        <motion.div
-                            aria-hidden
-                            animate={
-                                shouldReduceMotion
-                                    ? {}
-                                    : { opacity: [0.25, 0.45, 0.25] }
-                            }
-                            transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                            }}
-                            className="
-                pointer-events-none
-                absolute inset-0
-                rounded-3xl
-                bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.45),transparent_65%)]
-              "
-                        />
+        {/* RIGHT — DESKTOP CONSOLE / MOBILE STATUS */}
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={reduceMotion ? false : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full max-w-lg mx-auto"
+        >
+          <div className="relative rounded-2xl border border-white/20 bg-black/50 backdrop-blur-xl shadow-2xl overflow-hidden">
 
-                        {/* FLOATING IMAGE */}
-                        <motion.div
-                            animate={
-                                shouldReduceMotion
-                                    ? {}
-                                    : {
-                                        y: [0, -14, 0],
-                                        rotate: [0, 1.2, 0],
-                                    }
-                            }
-                            transition={{
-                                duration: 3.2,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                            }}
-                            className="relative z-10"
-                        >
-                            <Image
-                                src="/myself.png"
-                                alt="Sayandeep Ghosh – Freelance Frontend Developer"
-                                width={320}
-                                height={480}
-                                priority
-                                className="object-contain"
-                            />
-                        </motion.div>
-                    </div>
-                </motion.div>
+            {/* Scan line (desktop only) */}
+            {!reduceMotion && (
+              <motion.div
+                className="hidden md:block absolute inset-x-0 h-[2px] bg-[var(--accent)] blur-sm"
+                initial={{ top: "-10%" }}
+                animate={{ top: ["-10%", "110%"] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
+              />
+            )}
 
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <span className="text-xs font-medium text-white/70">
+                Inference Status
+              </span>
+              <span className="flex items-center gap-2 text-[10px] text-emerald-400">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                LIVE
+              </span>
             </div>
-        </Section>
-    );
+
+            {/* Body */}
+            <div className="px-4 py-5 font-mono text-xs sm:text-sm text-white/75 space-y-2">
+              <p>{">"} Model loaded</p>
+              <p>{">"} Face detected</p>
+              <p>{">"} Feature extraction</p>
+              <p className="text-[var(--accent)] drop-shadow-[0_0_10px_var(--accent-glow)]">
+                {">"} Prediction: FAKE (0.83)
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* STATS — MOBILE SCROLL / DESKTOP GRID */}
+      <div className="relative mt-16">
+        <div className="mx-auto max-w-5xl px-5">
+          <div className="
+            flex sm:grid
+            sm:grid-cols-4
+            gap-4
+            overflow-x-auto
+            sm:overflow-visible
+            snap-x snap-mandatory
+            rounded-2xl
+            border border-white/15
+            bg-white/10 backdrop-blur-xl
+            px-4 py-4
+          ">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="min-w-[140px] sm:min-w-0 snap-center text-center"
+              >
+                <p className="text-xs text-white/40">{s.label}</p>
+                <p className="mt-1 text-sm sm:text-base font-semibold text-white">
+                  {s.value}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
 }
