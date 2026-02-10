@@ -1,41 +1,81 @@
 export default function Footer() {
-    return (
-        <footer className="relative mt-24 sm:mt-32 md:mt-48 overflow-hidden">
-            {/* Accent glow */}
-            <div
-                className="
+  return (
+    <footer className="relative mt-32 md:mt-48 overflow-hidden">
+      {/* Ambient forensic glow */}
+      <div
+        aria-hidden
+        className="
           pointer-events-none
-          absolute
-          inset-x-0
-          bottom-0
-          h-[220px] sm:h-[260px] md:h-[320px]
-          bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.18),transparent_70%)]
+          absolute inset-x-0 bottom-0
+          h-[260px]
+          bg-[radial-gradient(circle_at_center,var(--accent-soft),transparent_70%)]
         "
-            />
+      />
 
-            <div className="relative mx-auto max-w-7xl px-4 md:px-8">
-                <div className="border-t border-white/10 py-16 sm:py-20 md:py-28 text-center">
+      <div className="relative mx-auto max-w-7xl px-6 md:px-8">
+        <div className="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-xl px-8 py-12 shadow-2xl">
 
-                    {/* Project / Lab Name */}
-                    <h2
-                        className="
-              text-[clamp(2.2rem,8vw,6.5rem)]
-              font-extrabold
-              leading-none
-              tracking-tight
-              text-white/90
-            "
-                    >
-                        DEEPFAKE&nbsp;DETECTION&nbsp;
-                    </h2>
+          {/* Top row */}
+          <div className="grid gap-10 md:grid-cols-2 items-start">
 
-                    {/* Footer text */}
-                    <p className="mt-5 sm:mt-6 text-xs sm:text-sm md:text-base text-white/40">
-                        © 2026 · Built by Sayandeep, Ajay, Harsh &amp; Naveen
-                    </p>
+            {/* LEFT — Identity */}
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                Deepfake Detection Lab
+              </h2>
 
-                </div>
+              <p className="mt-3 max-w-md text-sm sm:text-base text-[var(--text-secondary)]">
+                A research-driven initiative focused on detecting AI-generated
+                facial content using modern deep learning architectures,
+                transparent evaluation, and open-source principles.
+              </p>
             </div>
-        </footer>
-    );
+
+            {/* RIGHT — Team */}
+            <div className="md:text-right">
+              <p className="text-sm font-medium text-white/70">
+                Project Contributors
+              </p>
+
+              <ul className="mt-4 space-y-2 text-sm sm:text-base text-[var(--text-secondary)]">
+                <li>
+                  <span className="text-white">Sayandeep Ghosh</span> · Model &
+                  System Design
+                </li>
+                <li>
+                  <span className="text-white">Ajay</span> · Research & Analysis
+                </li>
+                <li>
+                  <span className="text-white">Harsh</span> · Data Engineering
+                </li>
+                <li>
+                  <span className="text-white">Naveen</span> · Backend & API
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="my-10 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+          {/* Bottom row */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+            {/* Left */}
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
+              © {new Date().getFullYear()} Deepfake Detection Lab · Open Research Project
+            </p>
+
+            {/* Right */}
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
+              Built with{" "}
+              <span className="text-white">Next.js</span>,{" "}
+              <span className="text-white">PyTorch</span> &{" "}
+              <span className="text-white">FastAPI</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

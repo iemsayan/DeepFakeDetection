@@ -13,8 +13,8 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: "Deepfake Detection Lab",
-    template: "%s · Deepfake Detection Lab",
+    default: "Deepfake Detection",
+    template: "%s · Deepfake Detection",
   },
   description:
     "A research-driven deepfake detection system leveraging deep learning to identify AI-generated facial imagery through spatial and frequency-based analysis.",

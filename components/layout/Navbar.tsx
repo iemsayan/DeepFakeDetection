@@ -85,7 +85,7 @@ export default function Navbar() {
 
                         {/* Brand */}
                         <span className="text-sm sm:text-lg font-semibold text-[var(--accent)] whitespace-nowrap">
-                            Deepfake Detection using CNN & Transfer Learning
+                            Deepfake Detection
                         </span>
 
                         {/* Navigation */}
