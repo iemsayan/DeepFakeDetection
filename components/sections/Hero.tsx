@@ -94,7 +94,7 @@ export default function Hero() {
           "
         >
           <a
-            href="https://github.com/nvakumar/deepfake_detection_fastapi"
+            href="https://huggingface.co/spaces/nvakumarf/deepfake_detection"
             target="_blank"
             rel="noopener noreferrer"
             className="
