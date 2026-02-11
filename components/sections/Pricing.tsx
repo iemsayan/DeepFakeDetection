@@ -83,7 +83,7 @@ export default function Products() {
               </ul>
 
               <Link
-                href="https://github.com/nvakumar/deepfake_detection_fastapi"
+                href="https://colab.research.google.com/drive/1NzW1dNiV8gy_DeuyAotEa-JdGJuht44J?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
