@@ -6,46 +6,47 @@ import { motion } from "framer-motion";
 
 const steps = [
   {
-    title: "Problem Framing",
-    desc: "Define the deepfake detection objective, target modality (image or video), and key challenges such as subtle artifacts and real-world generalization.",
+    title: "Problem Definition",
+    desc: "Formulated deepfake detection as a binary classification task (REAL vs FAKE) with focus on face-centric manipulation artifacts and generalization to unseen samples.",
   },
   {
-    title: "Dataset Collection & Verification",
-    desc: "Gather REAL and FAKE samples, verify labels, remove corrupted data, and inspect class balance to reduce hidden dataset bias.",
+    title: "Dataset Collection (Kaggle)",
+    desc: "Collected publicly available real and deepfake face datasets. Verified labels, removed corrupted samples, and ensured balanced class distribution.",
   },
   {
-    title: "Data Structuring",
-    desc: "Standardize raw datasets into a consistent directory and label format compatible with deep learning training pipelines.",
+    title: "Face-Centric Preprocessing",
+    desc: "Applied RetinaFace for face detection and cropping. Standardized images to 224×224 resolution and organized into 70/15/15 train-validation-test splits.",
   },
   {
-    title: "Face Detection & Cropping",
-    desc: "Detect and isolate facial regions using RetinaFace to eliminate background noise and focus learning on manipulation-prone areas.",
+    title: "Data Normalization & Augmentation",
+    desc: "Performed resizing, tensor conversion, normalization, and applied augmentation techniques (flip, rotation, brightness shifts) to improve robustness.",
   },
   {
-    title: "Architecture Selection",
-    desc: "Adopt ConvNeXt-Base as the spatial backbone due to its strong texture modeling and modern convolutional design.",
+    title: "Spatial Model (ConvNeXt-Base)",
+    desc: "Fine-tuned a pretrained ConvNeXt-Base model (ImageNet) using transfer learning to capture spatial texture inconsistencies introduced by deepfakes.",
   },
   {
     title: "Fine-Tuning Strategy",
-    desc: "Apply transfer learning with selective layer unfreezing and AdamW optimization at low learning rates for stable convergence.",
+    desc: "Used AdamW optimizer (LR = 3e-5), partial layer unfreezing, and regularization techniques to stabilize training and prevent overfitting.",
   },
   {
-    title: "Training & Validation",
-    desc: "Train on face-centric data while monitoring validation trends to detect overfitting and spatial performance saturation.",
+    title: "Baseline Evaluation",
+    desc: "Achieved ~60–70% accuracy using spatial features alone, revealing limitations in detecting high-quality and unseen deepfake samples.",
   },
   {
-    title: "Evaluation & Error Analysis",
-    desc: "Evaluate on unseen test samples, analyze failure cases, and document limitations of purely spatial detection methods.",
+    title: "Frequency-Domain Feature Extraction",
+    desc: "Applied Fast Fourier Transform (FFT) to extract frequency magnitude spectra, capturing hidden manipulation patterns not visible in pixel space.",
   },
   {
-    title: "Deployment",
-    desc: "Export trained weights and deploy the model through a FastAPI backend for real-time inference via a web interface.",
+    title: "Hybrid Feature Fusion",
+    desc: "Designed a spatial + frequency hybrid architecture to combine ConvNeXt spatial embeddings with FFT-based features for improved robustness.",
   },
   {
-    title: "Iterative Extension",
-    desc: "Extend the system with frequency-domain and temporal modeling toward hybrid image-video deepfake detection.",
+    title: "Deployment (FastAPI + Web UI)",
+    desc: "Exported trained weights and deployed the model via FastAPI backend, enabling real-time image-based deepfake detection through a web interface.",
   },
 ];
+
 
 export default function Process() {
   return (
