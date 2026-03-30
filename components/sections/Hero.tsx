@@ -94,7 +94,7 @@ export default function Hero() {
           "
         >
           <a
-            href="https://huggingface.co/spaces/nvakumarf/deepfake_detection"
+            href="https://huggingface.co/spaces/iemsayan/deepfake-detector"
             target="_blank"
             rel="noopener noreferrer"
             className="
