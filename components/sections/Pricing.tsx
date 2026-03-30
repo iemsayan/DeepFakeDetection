@@ -23,7 +23,7 @@ export default function Products() {
         </motion.h2>
 
         <div className="grid gap-8 md:gap-10 md:grid-cols-2">
-
+          
           {/* IMAGE MODEL */}
           <motion.div
             variants={staggerItem}
@@ -37,23 +37,27 @@ export default function Products() {
               shadow-xl
             "
           >
-            {/* Subtle red glow */}
-            <div className="
-              pointer-events-none
-              absolute inset-0
-              rounded-3xl
-              shadow-[0_0_32px_var(--accent-soft)]
-            " />
+            {/* Glow */}
+            <div
+              className="
+                pointer-events-none
+                absolute inset-0
+                rounded-3xl
+                shadow-[0_0_32px_var(--accent-soft)]
+              "
+            />
 
             {/* Status */}
-            <span className="
-              absolute top-4 right-4
-              rounded-full
-              bg-emerald-400
-              px-3 py-1
-              text-xs font-semibold
-              text-black
-            ">
+            <span
+              className="
+                absolute top-4 right-4
+                rounded-full
+                bg-emerald-400
+                px-3 py-1
+                text-xs font-semibold
+                text-black
+              "
+            >
               LIVE
             </span>
 
@@ -83,7 +87,7 @@ export default function Products() {
               </ul>
 
               <Link
-                href="https://colab.research.google.com/drive/1NzW1dNiV8gy_DeuyAotEa-JdGJuht44J?usp=sharing"
+                href="https://colab.research.google.com/drive/1jZ9HI7C5V2Vv8caYcLoUlOmhlX_HPYof?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -105,89 +109,7 @@ export default function Products() {
             </div>
           </motion.div>
 
-          {/* VIDEO MODEL */}
-          <motion.div
-            variants={staggerItem}
-            className="
-              relative
-              rounded-3xl
-              border border-white/15
-              bg-white/10
-              backdrop-blur-xl
-              p-6 sm:p-8 md:p-10
-              shadow-xl
-              opacity-90
-            "
-          >
-            {/* Softer glow */}
-            <div className="
-              pointer-events-none
-              absolute inset-0
-              rounded-3xl
-              shadow-[0_0_22px_rgba(255,255,255,0.08)]
-            " />
-
-            {/* Status */}
-            <span className="
-              absolute top-4 right-4
-              rounded-full
-              bg-yellow-400
-              px-3 py-1
-              text-xs font-semibold
-              text-black
-            ">
-              IN DEVELOPMENT
-            </span>
-
-            <div className="relative z-10">
-              <h3 className="text-2xl sm:text-3xl font-semibold mb-3">
-                Video Deepfake Detection
-              </h3>
-
-              <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-6">
-                Temporal and frequency-domain analysis for detecting
-                manipulated videos across sequential frames.
-              </p>
-
-              <ul className="space-y-3 text-sm sm:text-base mb-8">
-                {[
-                  "Frame-wise face extraction",
-                  "Spatial + frequency feature fusion",
-                  "FFT-based artifact detection",
-                  "Sequence-aware modeling",
-                  "Improved real-world generalization",
-                ].map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span className="text-[var(--accent)]">■</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <span className="
-                inline-block
-                rounded-xl
-                border border-white/25
-                bg-white/5
-                px-7 py-3
-                text-sm sm:text-base
-                text-[var(--text-secondary)]
-              ">
-                Coming Soon
-              </span>
-            </div>
-          </motion.div>
         </div>
-
-        {/* Footer note */}
-        <p className="
-          mt-10
-          text-center
-          text-xs sm:text-sm
-          text-[var(--text-secondary)]
-        ">
-          Research-driven systems · Documented limitations · Continuous iteration
-        </p>
       </Stagger>
     </Section>
   );
