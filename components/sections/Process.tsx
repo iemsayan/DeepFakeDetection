@@ -15,7 +15,7 @@ const steps = [
   },
   {
     title: "Frame Extraction Pipeline",
-    desc: "Extracted frames from videos using OpenCV, removed redundant frames, and created a structured dataset pipeline suitable for deep learning workflows.",
+    desc: "Extracted frames from videos using Haar Cascade, removed redundant frames, and created a structured dataset pipeline suitable for deep learning workflows.",
   },
   {
     title: "Dual Face Detection Strategy",
