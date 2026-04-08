@@ -13,7 +13,7 @@ export default function Products() {
         <motion.h2
           variants={staggerItem}
           className="
-            mb-10 md:mb-14
+            mb-12 md:mb-16
             text-center
             text-4xl sm:text-5xl md:text-6xl
             font-extrabold tracking-tight
@@ -24,14 +24,44 @@ export default function Products() {
 
         <div className="grid gap-8 md:gap-10 md:grid-cols-2">
 
-          {/* ================= IMAGE MODEL ================= */}
+          {/* ================= LEFT MODEL ================= */}
           <motion.div
             variants={staggerItem}
-            className="relative rounded-3xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 sm:p-8 md:p-10 shadow-xl"
+            className="
+              relative group
+              rounded-3xl
+              border border-white/20
+              bg-gradient-to-br from-white/10 to-white/5
+              backdrop-blur-2xl
+              p-6 sm:p-8 md:p-10
+              shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+              hover:shadow-[0_0_60px_var(--accent-soft)]
+              transition-all duration-500
+              hover:-translate-y-1
+            "
           >
-            <div className="pointer-events-none absolute inset-0 rounded-3xl shadow-[0_0_32px_var(--accent-soft)]" />
+            {/* Glow Layer */}
+            <div className="
+              pointer-events-none absolute inset-0 rounded-3xl
+              opacity-0 group-hover:opacity-100
+              transition duration-500
+              shadow-[0_0_60px_var(--accent-soft)]
+            " />
 
-            <span className="absolute top-4 right-4 rounded-full bg-emerald-400 px-3 py-1 text-xs font-semibold text-black">
+            {/* Top Gradient Border Glow */}
+            <div className="
+              absolute inset-0 rounded-3xl
+              bg-gradient-to-r from-transparent via-white/10 to-transparent
+              opacity-20
+            " />
+
+            {/* Status */}
+            <span className="
+              absolute top-4 right-4
+              rounded-full bg-emerald-400
+              px-3 py-1 text-xs font-semibold text-black
+              shadow-lg
+            ">
               LIVE
             </span>
 
@@ -41,17 +71,17 @@ export default function Products() {
               </h3>
 
               <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-6">
-                Face-centric image analysis using a spatial ConvNeXt-based
-                deep learning pipeline to identify AI-generated facial artifacts.
+                High-accuracy deepfake detection using ConvNeXt with RetinaFace
+                preprocessing and hybrid spatial learning.
               </p>
 
               <ul className="space-y-3 text-sm sm:text-base mb-8">
                 {[
-                  "RetinaFace-based face detection & cropping",
-                  "ConvNeXt-Base spatial backbone",
-                  "ImageNet pretrained initialization",
-                  "Clean train / validation / test split",
-                  "FastAPI inference backend",
+                  "RetinaFace-based face detection",
+                  "ConvNeXt-Base backbone",
+                  "ImageNet pretrained",
+                  "Clean dataset pipeline",
+                  "FastAPI backend",
                 ].map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="text-[var(--accent)]">■</span>
@@ -60,25 +90,74 @@ export default function Products() {
                 ))}
               </ul>
 
-              <Link
-                href="https://colab.research.google.com/drive/1jZ9HI7C5V2Vv8caYcLoUlOmhlX_HPYof?usp=sharing"
-                target="_blank"
-                className="inline-flex items-center justify-center rounded-xl bg-[var(--accent)] px-7 py-3 text-sm sm:text-base font-semibold text-black shadow-[0_0_36px_var(--accent-glow)] transition hover:scale-[1.03] active:scale-[0.97]"
-              >
-                View Source & API →
-              </Link>
+              {/* Buttons */}
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="https://colab.research.google.com/drive/1jZ9HI7C5V2Vv8caYcLoUlOmhlX_HPYof?usp=sharing"
+                  target="_blank"
+                  className="
+                    inline-flex items-center justify-center
+                    rounded-xl
+                    bg-[var(--accent)]
+                    px-6 py-3 text-sm sm:text-base font-semibold text-black
+                    shadow-[0_0_30px_var(--accent-glow)]
+                    transition hover:scale-[1.05] active:scale-[0.97]
+                  "
+                >
+                  View Source →
+                </Link>
+
+                <Link
+                  href="https://huggingface.co/spaces/iemsayan/deepfake-detector"
+                  target="_blank"
+                  className="
+                    inline-flex items-center justify-center
+                    rounded-xl
+                    border border-white/20
+                    px-6 py-3 text-sm sm:text-base font-semibold text-white
+                    backdrop-blur-lg
+                    hover:bg-white/10
+                    transition hover:scale-[1.05] active:scale-[0.97]
+                  "
+                >
+                  Try Live Demo →
+                </Link>
+              </div>
             </div>
           </motion.div>
 
-          {/* ================= HAAR CASCADE MODEL ================= */}
+          {/* ================= RIGHT MODEL ================= */}
           <motion.div
             variants={staggerItem}
-            className="relative rounded-3xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 sm:p-8 md:p-10 shadow-xl"
+            className="
+              relative group
+              rounded-3xl
+              border border-white/20
+              bg-gradient-to-br from-white/10 to-white/5
+              backdrop-blur-2xl
+              p-6 sm:p-8 md:p-10
+              shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+              hover:shadow-[0_0_60px_var(--accent-soft)]
+              transition-all duration-500
+              hover:-translate-y-1
+            "
           >
-            <div className="pointer-events-none absolute inset-0 rounded-3xl shadow-[0_0_32px_var(--accent-soft)]" />
+            {/* Glow */}
+            <div className="
+              pointer-events-none absolute inset-0 rounded-3xl
+              opacity-0 group-hover:opacity-100
+              transition duration-500
+              shadow-[0_0_60px_var(--accent-soft)]
+            " />
 
-            <span className="absolute top-4 right-4 rounded-full bg-yellow-400 px-3 py-1 text-xs font-semibold text-black">
-              FAST
+            {/* Status */}
+            <span className="
+              absolute top-4 right-4
+              rounded-full bg-emerald-400
+              px-3 py-1 text-xs font-semibold text-black
+              shadow-lg
+            ">
+              LIVE
             </span>
 
             <div className="relative z-10">
@@ -87,18 +166,17 @@ export default function Products() {
               </h3>
 
               <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-6">
-                Lightweight deepfake detection pipeline using Haar Cascade for
-                fast face localization combined with CNN-based classification.
-                Ideal for real-time and low-resource environments.
+                Lightweight pipeline using Haar Cascade for fast face detection
+                combined with CNN classification for real-time deepfake detection.
               </p>
 
               <ul className="space-y-3 text-sm sm:text-base mb-8">
                 {[
-                  "OpenCV Haar Cascade face detection",
-                  "Fast CPU-based inference",
-                  "Low latency pipeline",
-                  "Works without GPU",
-                  "Integrated with Hugging Face demo",
+                  "OpenCV Haar Cascade detection",
+                  "Fast CPU inference",
+                  "Low latency system",
+                  "No GPU required",
+                  "Hugging Face deployment",
                 ].map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="text-[var(--accent)]">■</span>
@@ -110,7 +188,14 @@ export default function Products() {
               <Link
                 href="https://huggingface.co/spaces/iemsayan/deep-fake-detection-model"
                 target="_blank"
-                className="inline-flex items-center justify-center rounded-xl bg-[var(--accent)] px-7 py-3 text-sm sm:text-base font-semibold text-black shadow-[0_0_36px_var(--accent-glow)] transition hover:scale-[1.03] active:scale-[0.97]"
+                className="
+                  inline-flex items-center justify-center
+                  rounded-xl
+                  bg-[var(--accent)]
+                  px-7 py-3 text-sm sm:text-base font-semibold text-black
+                  shadow-[0_0_30px_var(--accent-glow)]
+                  transition hover:scale-[1.05] active:scale-[0.97]
+                "
               >
                 Try Live Demo →
               </Link>
