@@ -25,9 +25,7 @@ export default function Footer() {
               </h2>
 
               <p className="mt-3 max-w-md text-sm sm:text-base text-[var(--text-secondary)]">
-                A final year project-driven initiative focused on detecting AI-generated
-                facial content using modern deep learning architectures,
-                transparent evaluation, and open-source principles.
+                A final-year project focused on detecting AI-generated facial content using deep learning, designed as a free and open-source solution to promote transparency, accessibility, and reproducibility.
               </p>
             </div>
 
