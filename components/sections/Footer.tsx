@@ -25,7 +25,7 @@ export default function Footer() {
               </h2>
 
               <p className="mt-3 max-w-md text-sm sm:text-base text-[var(--text-secondary)]">
-                A research-driven initiative focused on detecting AI-generated
+                A final year project-driven initiative focused on detecting AI-generated
                 facial content using modern deep learning architectures,
                 transparent evaluation, and open-source principles.
               </p>
@@ -39,17 +39,17 @@ export default function Footer() {
 
               <ul className="mt-4 space-y-2 text-sm sm:text-base text-[var(--text-secondary)]">
                 <li>
-                  <span className="text-white">Sayandeep Ghosh</span> · Model &
-                  System Design
+                  <span className="text-white">Sayandeep Ghosh</span> · Model-1 &
+                  Deployment
                 </li>
                 <li>
-                  <span className="text-white">Ajay</span> · Research & Analysis
+                  <span className="text-white">Ajay</span> · Model-2 & Research
                 </li>
                 <li>
-                  <span className="text-white">Harsh</span> · Data Engineering
+                  <span className="text-white">Harsh</span> · Research & Documentation
                 </li>
                 <li>
-                  <span className="text-white">Naveen</span> · Backend & API
+                  <span className="text-white">Naveen</span> · Research & Documentation
                 </li>
               </ul>
             </div>
