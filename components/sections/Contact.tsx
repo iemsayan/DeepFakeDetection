@@ -4,13 +4,11 @@ import Reveal from "@/components/ui/Reveal";
 const TEAM = [
   {
     name: "Sayandeep Ghosh",
-    role: "Deep Learning Engineer",
     type: "email",
     value: "sayan.techy@gmail.com",
   },
   {
     name: "Ajay",
-    role: "Backend & Deployment",
     type: "phone",
     value: "+91 97812 79999",
   },
@@ -97,10 +95,6 @@ export default function Contact() {
                         "
                       >
                         {member.name}
-                      </span>
-
-                      <span className="block mt-1 text-sm sm:text-base text-[var(--text-secondary)]">
-                        {member.role}
                       </span>
                     </div>
 
