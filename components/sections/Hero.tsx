@@ -72,10 +72,7 @@ export default function Hero() {
             leading-relaxed
           "
         >
-          A research-driven deep learning system that detects AI-generated
-          facial images using artificial neural networks and transfer learning.
-          The model focuses on subtle spatial artifacts introduced during
-          synthetic image generation.
+          A final-year project focused on detecting AI-generated facial content using deep learning, designed as a free and open-source solution to promote transparency, accessibility, and reproducibility.
         </motion.p>
 
         {/* CTA */}
