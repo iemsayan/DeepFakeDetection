@@ -19,7 +19,7 @@ const steps = [
   },
   {
     title: "Dual Face Detection Strategy",
-    desc: "Implemented RetinaFace for high-accuracy face localization and Haar Cascade for lightweight, real-time detection, enabling both performance and deployment flexibility.",
+    desc: "Implemented Haar Cascade for high-accuracy face localization and Haar Cascade for lightweight, real-time detection, enabling both performance and deployment flexibility.",
   },
   {
     title: "Face-Centric Preprocessing",
